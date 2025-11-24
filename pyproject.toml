@@ -1,18 +1,199 @@
 [build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling>=1.8.0"]
+build-backend = "hatchling.build"
 
 [project]
 name = "vald8"
-version = "0.1.0"
-description = "SDK for automated LLM evaluation and CI integration"
-authors = [
-  { name="Alex Thorpe", email="contact@vald8.com" }
-]
+version = "0.1.1"
+description = "Vald8 is a minimalist, developer-first SDK for testing LLM-powered Python functions using structured JSONL datasets."
 readme = "README.md"
-license = {file = "LICENSE"}
-requires-python = ">=3.7"
-dependencies = []
+license = { file = "LICENSE" }
+authors = [
+    { name = "Alex Thorpe", email = "osuthorpe@gmail.com" }
+]
+maintainers = [
+    { name = "Alex Thorpe", email = "osuthorpe@gmail.com" }
+]
+keywords = [
+    "llm", "evaluation", "testing", "ai", "machine-learning", 
+    "pytest", "validation", "metrics", "openai", "anthropic"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10", 
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+requires-python = ">=3.9"
+
+dependencies = [
+    "pydantic>=2.0.0",
+    "httpx>=0.25.0",
+    "jsonschema>=4.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "flake8>=6.0.0",
+    "mypy>=1.5.0",
+    "pre-commit>=3.0.0"
+]
+
+docs = [
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.0.0", 
+    "mkdocstrings[python]>=0.22.0"
+]
+
+all = [
+    "vald8[dev,docs]"
+]
+
+[project.urls]
+Homepage = "https://github.com/osuthorpe/vald8"
+Documentation = "https://vald8.readthedocs.io"
+Repository = "https://github.com/osuthorpe/vald8.git"
+Issues = "https://github.com/osuthorpe/vald8/issues"
+Changelog = "https://github.com/osuthorpe/vald8/blob/main/CHANGELOG.md"
 
 [project.scripts]
-vald8 = "vald8.cli:run_local"
+vald8 = "vald8.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["vald8"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/vald8",
+    "/tests",
+    "/examples", 
+    "/README.md",
+    "/LICENSE",
+    "/CHANGELOG.md"
+]
+exclude = [
+    "/.git*",
+    "/.cache",
+    "/__pycache__",
+    "/.pytest_cache",
+    "/runs",
+    "/.vald8_cache"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers"
+]
+markers = [
+    "integration: Integration tests that require external services",
+    "slow: Slow tests that take more than 1 second"
+]
+
+[tool.black]
+line-length = 88
+target-version = ["py39", "py310", "py311", "py312"]
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # Exclude common directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | runs
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = [
+    "httpx.*",
+    "jsonschema.*"
+]
+ignore_missing_imports = true
+
+[tool.coverage.run]
+source = ["vald8"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "vald8/__main__.py"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod"
+]
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = [
+    "E203",  # whitespace before ':'
+    "E501",  # line too long (handled by black)
+    "W503",  # line break before binary operator
+]
+exclude = [
+    ".git",
+    "__pycache__", 
+    "build",
+    "dist",
+    ".eggs",
+    "*.egg-info",
+    ".pytest_cache",
+    ".mypy_cache",
+    "runs"
+]

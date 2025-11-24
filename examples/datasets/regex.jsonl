@@ -1,0 +1,1 @@
+{"id": "regex_1", "input": "Generate a date in ISO format (YYYY-MM-DD)", "expected": {"regex": "\\d{4}-\\d{2}-\\d{2}"}}

@@ -1,0 +1,1 @@
+{"id": "judge_1", "input": "Write a polite email declining a job offer.", "expected": {"judge": {"prompt": "Is the tone polite and professional?"}}}
