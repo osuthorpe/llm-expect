@@ -5,14 +5,14 @@ build-backend = "hatchling.build"
 [project]
 name = "vald8"
 version = "0.1.0"
-description = "pytest for LLMs - Lightweight Python SDK for automated LLM evaluation"
+description = "Vald8 is a minimalist, developer-first SDK for testing LLM-powered Python functions using structured JSONL datasets."
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [
-    { name = "Alex Thorpe", email = "alex@example.com" }
+    { name = "Alex Thorpe", email = "osuthorpe@gmail.com" }
 ]
 maintainers = [
-    { name = "Alex Thorpe", email = "alex@example.com" }
+    { name = "Alex Thorpe", email = "osuthorpe@gmail.com" }
 ]
 keywords = [
     "llm", "evaluation", "testing", "ai", "machine-learning", 
@@ -62,11 +62,11 @@ all = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/vald8"
+Homepage = "https://github.com/osuthorpe/vald8"
 Documentation = "https://vald8.readthedocs.io"
-Repository = "https://github.com/yourusername/vald8.git"
-Issues = "https://github.com/yourusername/vald8/issues"
-Changelog = "https://github.com/yourusername/vald8/blob/main/CHANGELOG.md"
+Repository = "https://github.com/osuthorpe/vald8.git"
+Issues = "https://github.com/osuthorpe/vald8/issues"
+Changelog = "https://github.com/osuthorpe/vald8/blob/main/CHANGELOG.md"
 
 [project.scripts]
 vald8 = "vald8.cli:main"
@@ -97,9 +97,6 @@ testpaths = ["tests"]
 python_files = ["test_*.py", "*_test.py"]
 python_functions = ["test_*"]
 addopts = [
-    "--cov=vald8",
-    "--cov-report=term-missing",
-    "--cov-report=html",
     "--strict-markers"
 ]
 markers = [

@@ -4,7 +4,7 @@ Basic Vald8 usage example.
 Shows how to use the @vald8 decorator for simple LLM function evaluation.
 """
 
-import json
+
 from vald8 import vald8
 
 
@@ -60,103 +60,8 @@ def generate_greeting(name: str, time_of_day: str) -> str:
         return f"Hello, {name}!"
 
 
-def create_example_datasets():
-    """Create example datasets for the functions above."""
-    
-    # Basic tests dataset
-    basic_tests = [
-        {
-            "id": "greeting",
-            "input": "Hello there!",
-            "expected": {"contains": ["Hello", "help"]}
-        },
-        {
-            "id": "name_question", 
-            "input": "What's your name?",
-            "expected": {"contains": ["assistant"]}
-        },
-        {
-            "id": "math_question",
-            "input": "What is 2+2?",
-            "expected": {"reference": "4"}
-        },
-        {
-            "id": "geography",
-            "input": "What's the capital of France?", 
-            "expected": {"contains": ["Paris"]}
-        }
-    ]
-    
-    # Structured tests dataset with schema validation
-    structured_tests = [
-        {
-            "id": "person1",
-            "input": "John is 30 years old and works as an engineer",
-            "expected": {
-                "schema": {
-                    "type": "object",
-                    "properties": {
-                        "name": {"type": "string"},
-                        "age": {"type": "number"},
-                        "occupation": {"type": "string"}
-                    },
-                    "required": ["name", "age", "occupation"]
-                },
-                "contains": ["John"]
-            }
-        },
-        {
-            "id": "person2",
-            "input": "Sarah is a teacher",
-            "expected": {
-                "schema": {
-                    "type": "object", 
-                    "properties": {
-                        "name": {"type": ["string", "null"]},
-                        "age": {"type": ["number", "null"]},
-                        "occupation": {"type": ["string", "null"]}
-                    }
-                }
-            }
-        }
-    ]
-    
-    # Multi-parameter tests dataset
-    multi_param_tests = [
-        {
-            "id": "morning_greeting",
-            "input": {"name": "Alice", "time_of_day": "morning"},
-            "expected": {"contains": ["Good morning", "Alice"]}
-        },
-        {
-            "id": "evening_greeting",
-            "input": {"name": "Bob", "time_of_day": "evening"}, 
-            "expected": {"contains": ["Good evening", "Bob"]}
-        },
-        {
-            "id": "general_greeting",
-            "input": {"name": "Charlie", "time_of_day": "afternoon"},
-            "expected": {"contains": ["Hello", "Charlie"]}
-        }
-    ]
-    
-    # Write datasets to files
-    import os
-    os.makedirs("examples", exist_ok=True)
-    
-    with open("examples/basic_tests.jsonl", "w") as f:
-        for test in basic_tests:
-            f.write(json.dumps(test) + "\n")
-    
-    with open("examples/structured_tests.jsonl", "w") as f:
-        for test in structured_tests:
-            f.write(json.dumps(test) + "\n")
-    
-    with open("examples/multi_param_tests.jsonl", "w") as f:
-        for test in multi_param_tests:
-            f.write(json.dumps(test) + "\n")
-    
-    print("✅ Example datasets created!")
+
+
 
 
 def run_examples():
@@ -200,5 +105,4 @@ def run_examples():
 
 
 if __name__ == "__main__":
-    create_example_datasets()
     run_examples()

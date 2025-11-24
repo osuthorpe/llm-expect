@@ -218,9 +218,9 @@ class Vald8Config(BaseModel):
     )
     
     # Metrics configuration
-    tests: List[str] = Field(
-        default=["accuracy"], 
-        description="List of metrics to evaluate"
+    tests: Optional[List[str]] = Field(
+        default=None, 
+        description="List of metrics to evaluate (None for auto-selection)"
     )
     thresholds: Dict[str, float] = Field(
         default_factory=lambda: {"accuracy": 0.8},
@@ -272,6 +272,8 @@ class Vald8Config(BaseModel):
     @field_validator('tests')
     @classmethod
     def validate_tests(cls, v):
+        if v is None:
+            return v
         valid_tests = {
             "accuracy", "schema_fidelity", "instruction_adherence", 
             "safety", "semantic_similarity"
@@ -291,9 +293,10 @@ class Vald8Config(BaseModel):
     @model_validator(mode='after')
     def validate_thresholds(self):
         # Ensure thresholds exist for all tests that need them
-        for test in self.tests:
-            if test not in self.thresholds:
-                self.thresholds[test] = 0.8  # Default threshold
+        if self.tests:
+            for test in self.tests:
+                if test not in self.thresholds:
+                    self.thresholds[test] = 0.8  # Default threshold
         
         # Validate threshold values
         for test, threshold in self.thresholds.items():

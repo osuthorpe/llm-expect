@@ -38,7 +38,7 @@ from .results import ResultsManager
 __version__ = "0.1.0"
 __author__ = "Alex Thorpe"
 __license__ = "MIT"
-__description__ = "pytest for LLMs - Lightweight Python SDK for automated LLM evaluation"
+__description__ = "Vald8 is a minimalist, developer-first SDK for testing LLM-powered Python functions using structured JSONL datasets."
 
 __all__ = [
     # Core decorator

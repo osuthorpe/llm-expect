@@ -1,0 +1,38 @@
+# Vald8 Evaluation Report
+
+**Function:** generate
+**Dataset:** repro_tests.jsonl
+**Timestamp:** 2025-11-22 12:33:40
+**Run ID:** 0c5ef39e-f053-4dd2-ae97-a96bbbf9285f
+**Overall Result:** ❌ FAILED
+
+## Summary
+
+- **Total Tests:** 4
+- **Passed:** 3 (75.0%)
+- **Failed:** 1
+- **Errors:** 0
+- **Total Time:** 0.00s
+- **Avg Time/Test:** 0.00s
+
+## Metrics
+
+### Accuracy
+- **Mean Score:** 0.75
+- **Min Score:** 0.00
+- **Max Score:** 1.00
+- **Std Dev:** 0.50
+
+## Configuration
+
+- **Tests:** accuracy
+- **Thresholds:** {'accuracy': 0.8}
+- **Sample Size:** All
+- **Cache:** True
+- **Timeout:** 60s
+
+## Failed Tests
+
+### json1
+**accuracy:** 0.00 (threshold: 0.80)
+

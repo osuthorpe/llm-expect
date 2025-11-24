@@ -1,0 +1,23 @@
+{
+  "total_tests": 4,
+  "passed_tests": 4,
+  "failed_tests": 0,
+  "error_tests": 0,
+  "success_rate": 1.0,
+  "metrics": {
+    "schema_fidelity": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "std": 0.0
+    },
+    "accuracy": {
+      "mean": 1.0,
+      "min": 1.0,
+      "max": 1.0,
+      "std": 0.0
+    }
+  },
+  "total_time": 4.220008850097656e-05,
+  "avg_time_per_test": 1.055002212524414e-05
+}

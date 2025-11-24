@@ -1,0 +1,27 @@
+{
+  "function_name": "generate",
+  "dataset_path": "repro_tests.jsonl",
+  "timestamp": "2025-11-22T12:31:52.610233",
+  "run_id": "d4334c45-043d-48bc-9184-cf55f5bb25d5",
+  "config": {
+    "dataset": "repro_tests.jsonl",
+    "sample_size": null,
+    "shuffle": false,
+    "tests": [
+      "accuracy"
+    ],
+    "thresholds": {
+      "accuracy": 0.8
+    },
+    "judge": null,
+    "cache": true,
+    "cache_dir": ".vald8_cache",
+    "results_dir": "runs",
+    "save_results": true,
+    "fail_fast": false,
+    "parallel": false,
+    "timeout": 60
+  },
+  "passed": false,
+  "total_tests": 4
+}

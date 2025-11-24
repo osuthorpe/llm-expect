@@ -117,7 +117,8 @@ class ResultsManager:
             # Configuration
             f.write("## Configuration\n\n")
             config = result.config
-            f.write(f"- **Tests:** {', '.join(config.tests)}\n")
+            tests_str = ', '.join(config.tests) if config.tests else "Auto-selected"
+            f.write(f"- **Tests:** {tests_str}\n")
             f.write(f"- **Thresholds:** {config.thresholds}\n")
             f.write(f"- **Sample Size:** {config.sample_size or 'All'}\n")
             f.write(f"- **Cache:** {config.cache}\n")
