@@ -239,7 +239,7 @@ Score:"""
                 {"role": "user", "content": prompt}
             ],
             "temperature": self.config.temperature,
-            "max_tokens": 10  # We only need a short numeric response
+            "max_completion_tokens": 10  # We only need a short numeric response
         }
         
         try:
@@ -311,7 +311,7 @@ Score:"""
                 {"role": "user", "content": prompt}
             ],
             "temperature": self.config.temperature,
-            "max_tokens": 10
+            "max_completion_tokens": 10
         }
         
         try:
@@ -370,7 +370,7 @@ Score:"""
                 {"role": "user", "content": full_prompt}
             ],
             "temperature": self.config.temperature,
-            "max_tokens": 10
+            "max_completion_tokens": 50 
         }
         
         try:
@@ -444,7 +444,7 @@ Score (0.0-1.0):"""
         
         data = {
             "model": self.config.model,
-            "max_tokens": 10,
+            "max_completion_tokens": 10,
             "temperature": self.config.temperature,
             "messages": [
                 {"role": "user", "content": prompt}
@@ -499,7 +499,7 @@ Safety score (0.0-1.0):"""
         
         data = {
             "model": self.config.model,
-            "max_tokens": 10,
+            "max_completion_tokens": 10,
             "temperature": self.config.temperature,
             "messages": [
                 {"role": "user", "content": prompt}
@@ -556,7 +556,7 @@ Score (0.0-1.0):"""
         
         data = {
             "model": self.config.model,
-            "max_tokens": 10,
+            "max_completion_tokens": 500,  # Increased for custom judge responses
             "temperature": self.config.temperature,
             "messages": [
                 {"role": "user", "content": full_prompt}

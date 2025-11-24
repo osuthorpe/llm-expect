@@ -35,7 +35,8 @@ class EvaluationRunner:
         
         # Initialize judge provider if needed
         judge_provider = None
-        if config.judge and any(test in ["instruction_adherence", "safety"] for test in config.tests):
+        tests = config.tests or []  # Defensive guard: handle None
+        if config.judge and any(test in ["instruction_adherence", "safety", "custom_judge"] for test in tests):
             judge_provider = create_judge_provider(config.judge)
         
         self.metric_evaluator = MetricEvaluator(judge_provider)

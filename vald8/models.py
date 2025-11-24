@@ -218,9 +218,9 @@ class Vald8Config(BaseModel):
     )
     
     # Metrics configuration
-    tests: Optional[List[str]] = Field(
-        default=None, 
-        description="List of metrics to evaluate (None for auto-selection)"
+    tests: List[str] = Field(
+        default_factory=list, 
+        description="List of metrics to evaluate (empty for auto-selection)"
     )
     thresholds: Dict[str, float] = Field(
         default_factory=lambda: {"accuracy": 0.8},
@@ -272,11 +272,11 @@ class Vald8Config(BaseModel):
     @field_validator('tests')
     @classmethod
     def validate_tests(cls, v):
-        if v is None:
+        if not v:  # Changed from "if v is None"
             return v
         valid_tests = {
             "accuracy", "schema_fidelity", "instruction_adherence", 
-            "safety", "semantic_similarity"
+            "safety", "semantic_similarity", "custom_judge"  # Added custom_judge
         }
         invalid = set(v) - valid_tests
         if invalid:

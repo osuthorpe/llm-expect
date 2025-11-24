@@ -64,7 +64,7 @@ class ConfigManager:
             # Build configuration dictionary with defaults and environment fallbacks
             config_dict = {
                 "dataset": dataset,
-                "tests": tests or self._get_env_list("TESTS"),
+                "tests": tests or self._get_env_list("TESTS") or [],  # Convert None to []
                 "thresholds": thresholds or self._build_thresholds_from_env(tests),
                 "sample_size": sample_size or self._get_env_int("SAMPLE_SIZE"),
                 "shuffle": shuffle or self._get_env_bool("SHUFFLE", False),

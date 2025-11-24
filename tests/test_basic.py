@@ -90,7 +90,7 @@ def test_basic_decorator():
         # Test config access
         config = simple_math.get_config()
         assert config.dataset == str(test_dataset)
-        assert config.tests is None
+        assert config.tests == []  # Changed from None to []
         
     finally:
         # Cleanup

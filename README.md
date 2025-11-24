@@ -15,7 +15,7 @@ Focus: **Make LLM evaluation as easy as pytest. Nothing more. Nothing less.**
 
 ---
 
-# 🚀 Why Vald8?
+# Why Vald8?
 
 If you're building with LLMs, you need a way to verify that your AI functions:
 
@@ -35,7 +35,7 @@ No configuration. No complexity. No over-engineering.
 
 ---
 
-# 📦 Install
+# Install
 
 ```bash
 pip install vald8
@@ -43,7 +43,7 @@ pip install vald8
 
 ---
 
-# 🧩 Core Concept
+# Core Concept
 
 You decorate any LLM function:
 
@@ -59,7 +59,7 @@ Vald8 loads your dataset, runs the function against each example, and scores the
 
 ---
 
-## 🚀 Running Examples
+## Running Examples
 
 Vald8 comes with a realistic example script that demonstrates how to evaluate functions using real LLM APIs (OpenAI, Anthropic, Gemini).
 
@@ -180,6 +180,69 @@ Uses an LLM to evaluate the output based on a custom prompt. Requires `judge_pro
 
 ---
 
+## ⚙️ Configuration
+
+Vald8 supports configuration through decorator parameters and environment variables.
+
+### Decorator Parameters
+
+```python
+@vald8(
+    dataset="path/to/dataset.jsonl",       # Required: Path to JSONL dataset
+    tests=["accuracy", "schema_fidelity"], # Optional: Metrics to evaluate (default: [])
+    thresholds={"accuracy": 0.9},          # Optional: Pass/fail thresholds (default: 0.8)
+    judge_provider="openai",               # Optional: LLM judge provider
+    judge_model="gpt-5.1",                 # Optional: Judge model name
+    sample_size=10,                        # Optional: Number of examples to sample
+    shuffle=True,                          # Optional: Shuffle before sampling (default: False)
+    cache=True,                            # Optional: Cache results (default: True)
+    cache_dir=".vald8_cache",              # Optional: Cache directory
+    results_dir="runs",                    # Optional: Results directory
+    fail_fast=False,                       # Optional: Stop on first failure (default: False)
+    timeout=60,                            # Optional: Function timeout in seconds
+    save_results=True,                     # Optional: Save detailed results (default: True)
+    parallel=False                         # Optional: Parallel execution (future)
+)
+```
+
+### Environment Variables
+
+All configuration parameters can be set via environment variables with the `VALD8_` prefix:
+
+| Variable | Type | Description | Default |
+|----------|------|-------------|---------|
+| `VALD8_TESTS` | List | Comma-separated metrics (e.g., `"accuracy,safety"`) | `[]` |
+| `VALD8_THRESHOLD` | Float | Global threshold for all metrics | `0.8` |
+| `VALD8_THRESHOLD_ACCURACY` | Float | Threshold for accuracy metric | `0.8` |
+| `VALD8_THRESHOLD_SAFETY` | Float | Threshold for safety metric | `1.0` |
+| `VALD8_SAMPLE_SIZE` | Int | Number of examples to sample | All |
+| `VALD8_SHUFFLE` | Bool | Shuffle examples (`true`/`false`) | `false` |
+| `VALD8_CACHE` | Bool | Enable caching | `true` |
+| `VALD8_CACHE_DIR` | String | Cache directory path | `.vald8_cache` |
+| `VALD8_RESULTS_DIR` | String | Results directory path | `runs` |
+| `VALD8_FAIL_FAST` | Bool | Stop on first failure | `false` |
+| `VALD8_TIMEOUT` | Int | Function timeout (seconds) | `60` |
+
+### Judge Configuration
+
+For LLM-as-judge metrics (`instruction_adherence`, `safety`, `custom_judge`):
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `VALD8_JUDGE_MODEL` | Judge model name | Provider-specific |
+| `VALD8_JUDGE_API_KEY` | Judge API key | From provider env var |
+| `VALD8_JUDGE_BASE_URL` | Custom API base URL | Provider default |
+| `VALD8_JUDGE_TIMEOUT` | Judge request timeout | `30` |
+| `VALD8_JUDGE_MAX_RETRIES` | Max retry attempts | `3` |
+| `VALD8_JUDGE_TEMPERATURE` | Judge temperature | `0.0` |
+
+**Provider API Keys:**
+- OpenAI: `OPENAI_API_KEY`
+- Anthropic: `ANTHROPIC_API_KEY`
+- Bedrock: `AWS_ACCESS_KEY_ID`
+
+---
+
 # 🧪 Decorating an LLM Function
 
 ```python
@@ -279,6 +342,34 @@ runs/
 ```
 
 All parameters are optional.
+
+---
+
+## 📁 Results Folder Structure
+
+Vald8 automatically saves evaluation results in a session-based hierarchy:
+
+```
+runs/
+└── 2025-11-23_a1b2c3d4/              # Session folder (date + session_id)
+    ├── extract_correct/              # Function-specific results
+    │   ├── results.jsonl             # Detailed test results (one per line)
+    │   ├── summary.json              # Aggregated statistics
+    │   ├── metadata.json             # Run configuration and info
+    │   └── report.txt                # Human-readable report
+    ├── extract_incorrect/
+    │   └── ...
+    └── judge_correct/
+        └── ...
+```
+
+**Session Grouping**: All functions evaluated in the same script run share a session ID and are grouped under one master folder.
+
+**Files**:
+- `results.jsonl`: Line-delimited JSON with each test result
+- `summary.json`: Success rate, metrics, timing stats
+- `metadata.json`: Function name, config, timestamp
+- `report.txt`: Formatted report with failed tests
 
 ---
 

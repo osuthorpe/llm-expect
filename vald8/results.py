@@ -18,6 +18,7 @@ class ResultsManager:
     """Manages evaluation results storage and reporting."""
     
     def __init__(self, results_dir: str = "runs"):
+        """Initialize results manager."""
         self.results_dir = Path(results_dir)
         self.results_dir.mkdir(parents=True, exist_ok=True)
     
@@ -35,10 +36,17 @@ class ResultsManager:
             Vald8Error: If saving fails
         """
         try:
-            # Create unique run directory
-            timestamp = result.timestamp.strftime("%Y-%m-%d_%H-%M-%S")
-            run_dir_name = f"{timestamp}_{result.run_id[:8]}"
-            run_dir = self.results_dir / run_dir_name
+            # Get session ID for grouping
+            from .results import get_session_id
+            session_id = get_session_id()
+            
+            # Create master session folder: {date}_{session_id}
+            session_date = result.timestamp.strftime("%Y-%m-%d")
+            session_dir = self.results_dir / f"{session_date}_{session_id[:8]}"
+            session_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Create function-specific folder inside session
+            run_dir = session_dir / result.function_name
             run_dir.mkdir(parents=True, exist_ok=True)
             
             # Save detailed results as JSONL (one test per line)
@@ -388,3 +396,26 @@ def calculate_summary_stats(tests: List[TestResult]) -> EvaluationSummary:
 def generate_run_id() -> str:
     """Generate a unique run ID."""
     return str(uuid.uuid4())
+
+
+# Global session ID for grouping runs from the same script execution
+_current_session_id: Optional[str] = None
+
+
+def get_session_id() -> str:
+    """
+    Get or create the current session ID.
+    
+    All functions evaluated in the same script run will share this session ID,
+    allowing their results to be grouped together in a single master folder.
+    """
+    global _current_session_id
+    if _current_session_id is None:
+        _current_session_id = str(uuid.uuid4())
+    return _current_session_id
+
+
+def reset_session_id() -> None:
+    """Reset the session ID (useful for testing or manual control)."""
+    global _current_session_id
+    _current_session_id = None
