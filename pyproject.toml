@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "vald8"
-version = "0.1.1"
+version = "0.1.2"
 description = "Vald8 is a minimalist, developer-first SDK for testing LLM-powered Python functions using structured JSONL datasets."
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -62,11 +62,11 @@ all = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/osuthorpe/vald8"
+Homepage = "https://github.com/osuthorpe/vald8-sdk"
 Documentation = "https://vald8.readthedocs.io"
-Repository = "https://github.com/osuthorpe/vald8.git"
-Issues = "https://github.com/osuthorpe/vald8/issues"
-Changelog = "https://github.com/osuthorpe/vald8/blob/main/CHANGELOG.md"
+Repository = "https://github.com/osuthorpe/vald8-sdk.git"
+Issues = "https://github.com/osuthorpe/vald8-sdk/issues"
+Changelog = "https://github.com/osuthorpe/vald8-sdk/blob/main/CHANGELOG.md"
 
 [project.scripts]
 vald8 = "vald8.cli:main"
