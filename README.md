@@ -88,22 +88,32 @@ Vald8 comes with a realistic example script that demonstrates how to evaluate fu
 
 We provide specific examples for different testing scenarios:
 
-**1. Summarization (Content Check)**
+**1. Reference (Exact Match)**
+```bash
+python examples/example_reference_openai.py
+```
+
+**2. Summarization (Content Check)**
 ```bash
 python examples/example_summary_openai.py
 ```
 
-**2. Extraction (Schema Validation)**
+**3. Extraction (Schema Validation)**
 ```bash
 python examples/example_extraction_openai.py
 ```
 
-**3. Safety (Refusal Check)**
+**4. Regex (Pattern Matching)**
+```bash
+python examples/example_regex_openai.py
+```
+
+**5. Safety (Refusal Check)**
 ```bash
 python examples/example_safety_openai.py
 ```
 
-**4. Judge (LLM Evaluation)**
+**6. Judge (LLM Evaluation)**
 ```bash
 python examples/example_judge_openai.py
 ```
