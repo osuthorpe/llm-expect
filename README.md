@@ -86,17 +86,26 @@ Vald8 comes with a realistic example script that demonstrates how to evaluate fu
 
 ### Run the Examples
 
-You can run the vendor-specific examples individually:
+We provide specific examples for different testing scenarios:
 
+**1. Summarization (Content Check)**
 ```bash
-# OpenAI
-python examples/openai_example.py
+python examples/example_summary_openai.py
+```
 
-# Anthropic
-python examples/anthropic_example.py
+**2. Extraction (Schema Validation)**
+```bash
+python examples/example_extraction_openai.py
+```
 
-# Google Gemini
-python examples/google_example.py
+**3. Safety (Refusal Check)**
+```bash
+python examples/example_safety_openai.py
+```
+
+**4. Judge (LLM Evaluation)**
+```bash
+python examples/example_judge_openai.py
 ```
 
 These scripts will:
@@ -119,10 +128,55 @@ Save as `tests.jsonl`:
 
 Supported expectations:
 
-- `"reference": "exact value"`
-- `"contains": ["word1", "word2"]`
-- `"regex": "pattern"`
-- `"schema": {...}`  
+### 1. Reference (Exact Match)
+Checks if the output matches a reference string exactly (ignoring whitespace).
+```json
+"expected": {"reference": "42"}
+```
+
+### 2. Contains (Keywords)
+Checks if the output contains **all** specified keywords (case-insensitive).
+```json
+"expected": {"contains": ["hello", "world"]}
+```
+
+### 3. Regex (Pattern Matching)
+Checks if the output matches a regular expression.
+```json
+"expected": {"regex": "^\\d{4}-\\d{2}-\\d{2}$"}
+```
+
+### 4. Schema (JSON Validation)
+Validates that the output is valid JSON and conforms to a JSON Schema.
+```json
+"expected": {
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {"type": "string"},
+      "age": {"type": "integer"}
+    },
+    "required": ["name", "age"]
+  }
+}
+```
+
+### 5. Safety (Harmful Content)
+Checks for harmful content using a keyword list. Can be inverted.
+```json
+"expected": {"safe": true}
+```
+
+### 6. Judge (LLM-as-a-Judge)
+Uses an LLM to evaluate the output based on a custom prompt. Requires `judge_provider` to be configured.
+```json
+"expected": {
+  "judge": {
+    "prompt": "Is this response polite and professional?"
+  }
+}
+```
+
 
 ---
 
@@ -184,7 +238,7 @@ Most tests require **no API calls**.
 
 ---
 
-# 🧩 CI/CD Integration
+# CI/CD Integration
 
 ```yaml
 - name: Run Vald8 Tests
@@ -197,7 +251,7 @@ Most tests require **no API calls**.
 
 ---
 
-# 📁 Results Format
+# Results Format
 
 Each run produces:
 
@@ -211,7 +265,7 @@ runs/
 
 ---
 
-# 🔧 Configuration Options
+# Configuration Options
 
 ```python
 @vald8(
@@ -228,28 +282,12 @@ All parameters are optional.
 
 ---
 
-# 🛠 Minimal Feature Set (v0.1)
-
-Included:
-
-- ✔ Test decorator  
-- ✔ JSONL dataset loader  
-- ✔ Schema validation  
-- ✔ Contains / reference / regex checks  
-- ✔ Optional LLM-as-judge  
-- ✔ Clear results + artifacts  
-- ✔ Offline mode  
-- ✔ CI/CD-ready  
-- ✔ Zero-config defaults  
-
----
-
-# 🤝 Contributing
+# Contributing
 
 PRs welcome.
 
 ---
 
-# 📜 License
+# License
 
 MIT License — free and open source.

@@ -71,6 +71,29 @@ class BaseJudgeProvider(ABC):
             JudgeProviderError: If evaluation fails
         """
         pass
+
+    @abstractmethod
+    def evaluate_custom(
+        self,
+        actual: str,
+        prompt: str,
+        test_id: str
+    ) -> float:
+        """
+        Evaluate using a custom prompt.
+        
+        Args:
+            actual: The actual response to evaluate
+            prompt: The custom evaluation prompt/criteria
+            test_id: Test case ID for error reporting
+            
+        Returns:
+            Score from 0.0 to 1.0
+            
+        Raises:
+            JudgeProviderError: If evaluation fails
+        """
+        pass
     
     def _make_request(
         self, 
@@ -322,6 +345,65 @@ Score:"""
                 model=self.config.model
             )
 
+    def evaluate_custom(self, actual: str, prompt: str, test_id: str) -> float:
+        """Evaluate using custom prompt with OpenAI."""
+        
+        full_prompt = f"""
+You are an expert evaluator. Rate the response based on the following criteria.
+
+Criteria: {prompt}
+
+Response: {actual}
+
+Provide only a numeric score between 0.0 and 1.0.
+
+Score:"""
+
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json"
+        }
+        
+        data = {
+            "model": self.config.model,
+            "messages": [
+                {"role": "user", "content": full_prompt}
+            ],
+            "temperature": self.config.temperature,
+            "max_tokens": 10
+        }
+        
+        try:
+            response_data = self._make_request(
+                f"{self.base_url}/chat/completions",
+                headers,
+                data,
+                test_id
+            )
+            
+            content = response_data["choices"][0]["message"]["content"].strip()
+            
+            import re
+            score_match = re.search(r'(\d+\.?\d*)', content)
+            if score_match:
+                score = float(score_match.group(1))
+                return max(0.0, min(1.0, score))
+            else:
+                raise JudgeProviderError(
+                    f"Could not parse score from response: {content}",
+                    provider="openai",
+                    model=self.config.model
+                )
+                
+        except JudgeProviderError:
+            raise
+        except Exception as e:
+            raise JudgeProviderError(
+                f"Error evaluating custom criteria: {str(e)}",
+                provider="openai",
+                model=self.config.model
+            )
+
 
 class AnthropicJudgeProvider(BaseJudgeProvider):
     """Anthropic judge provider using Claude models."""
@@ -455,6 +537,63 @@ Safety score (0.0-1.0):"""
                 model=self.config.model
             )
 
+    def evaluate_custom(self, actual: str, prompt: str, test_id: str) -> float:
+        """Evaluate using custom prompt with Claude."""
+        
+        full_prompt = f"""Rate the response based on the following criteria. Provide only a numeric score from 0.0 to 1.0.
+
+Criteria: {prompt}
+
+Response: {actual}
+
+Score (0.0-1.0):"""
+
+        headers = {
+            "x-api-key": self.api_key,
+            "Content-Type": "application/json",
+            "anthropic-version": "2023-06-01"
+        }
+        
+        data = {
+            "model": self.config.model,
+            "max_tokens": 10,
+            "temperature": self.config.temperature,
+            "messages": [
+                {"role": "user", "content": full_prompt}
+            ]
+        }
+        
+        try:
+            response_data = self._make_request(
+                f"{self.base_url}/messages",
+                headers,
+                data,
+                test_id
+            )
+            
+            content = response_data["content"][0]["text"].strip()
+            
+            import re
+            score_match = re.search(r'(\d+\.?\d*)', content)
+            if score_match:
+                score = float(score_match.group(1))
+                return max(0.0, min(1.0, score))
+            else:
+                raise JudgeProviderError(
+                    f"Could not parse score from Claude response: {content}",
+                    provider="anthropic",
+                    model=self.config.model
+                )
+                
+        except JudgeProviderError:
+            raise
+        except Exception as e:
+            raise JudgeProviderError(
+                f"Error evaluating custom criteria with Claude: {str(e)}",
+                provider="anthropic",
+                model=self.config.model
+            )
+
 
 class BedrockJudgeProvider(BaseJudgeProvider):
     """AWS Bedrock judge provider (placeholder implementation)."""
@@ -480,6 +619,10 @@ class BedrockJudgeProvider(BaseJudgeProvider):
     
     def evaluate_safety(self, actual: str, test_id: str) -> float:
         """Placeholder for Bedrock safety evaluation."""
+        raise NotImplementedError("Bedrock provider not yet implemented")
+
+    def evaluate_custom(self, actual: str, prompt: str, test_id: str) -> float:
+        """Placeholder for Bedrock custom evaluation."""
         raise NotImplementedError("Bedrock provider not yet implemented")
 
 
