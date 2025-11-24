@@ -56,8 +56,7 @@ class MetricResult(BaseModel):
         description="Additional metric-specific details"
     )
     
-    class Config:
-        extra = "forbid"
+    model_config = ConfigDict(extra="forbid")
 
 
 class TestResult(BaseModel):
@@ -93,8 +92,7 @@ class TestResult(BaseModel):
             raise ValueError("Metric names must be unique within a test result")
         return v
     
-    class Config:
-        extra = "forbid"
+    model_config = ConfigDict(extra="forbid")
 
 
 class EvaluationSummary(BaseModel):
@@ -131,8 +129,7 @@ class EvaluationSummary(BaseModel):
         
         return self
     
-    class Config:
-        extra = "forbid"
+    model_config = ConfigDict(extra="forbid")
 
 
 class EvaluationResult(BaseModel):
@@ -158,8 +155,7 @@ class EvaluationResult(BaseModel):
         description="Directory where results are saved"
     )
     
-    class Config:
-        extra = "forbid"
+    model_config = ConfigDict(extra="forbid")
 
 
 class JudgeConfig(BaseModel):
@@ -197,8 +193,7 @@ class JudgeConfig(BaseModel):
         description="Temperature for judge responses"
     )
     
-    class Config:
-        extra = "forbid"
+    model_config = ConfigDict(extra="forbid")
 
 
 class Vald8Config(BaseModel):
@@ -304,8 +299,7 @@ class Vald8Config(BaseModel):
         
         return self
     
-    class Config:
-        extra = "forbid"
+    model_config = ConfigDict(extra="forbid")
 
 
 # Update forward references

@@ -341,7 +341,7 @@ class ConfigManager:
             config_path.parent.mkdir(parents=True, exist_ok=True)
             
             # Convert to dictionary and handle judge config
-            data = config.dict()
+            data = config.model_dump()
             if data.get("judge"):
                 # Exclude sensitive information like API keys
                 judge_data = data["judge"].copy()

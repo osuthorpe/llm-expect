@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "vald8"
-version = "0.1.4"
+version = "0.1.5"
 description = "Vald8 is a minimalist, developer-first SDK for testing LLM-powered Python functions using structured JSONL datasets."
 readme = "README.md"
 license = { file = "LICENSE" }

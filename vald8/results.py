@@ -54,13 +54,13 @@ class ResultsManager:
             with open(results_file, 'w', encoding='utf-8') as f:
                 for test in result.tests:
                     # Convert to dict and write as JSON line
-                    test_dict = test.dict()
+                    test_dict = test.model_dump()
                     f.write(json.dumps(test_dict) + '\n')
             
             # Save summary as JSON
             summary_file = run_dir / "summary.json"
             with open(summary_file, 'w', encoding='utf-8') as f:
-                summary_dict = result.summary.dict()
+                summary_dict = result.summary.model_dump()
                 json.dump(summary_dict, f, indent=2, default=str)
             
             # Save metadata (config and run info)
@@ -70,7 +70,7 @@ class ResultsManager:
                 "dataset_path": result.dataset_path,
                 "timestamp": result.timestamp.isoformat(),
                 "run_id": result.run_id,
-                "config": result.config.dict(),
+                "config": result.config.model_dump(),
                 "passed": result.passed,
                 "total_tests": len(result.tests)
             }

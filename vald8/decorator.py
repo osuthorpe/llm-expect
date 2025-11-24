@@ -268,7 +268,7 @@ class Vald8Function:
     def update_config(self, **kwargs) -> None:
         """Update configuration parameters."""
         # Create new config with updates
-        config_dict = self.config.dict()
+        config_dict = self.config.model_dump()
         config_dict.update(kwargs)
         
         self.config = config_manager.create_config(**config_dict)

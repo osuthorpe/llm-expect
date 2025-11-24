@@ -35,7 +35,7 @@ from .dataset import load_dataset, validate_dataset_format
 from .config import config_manager
 from .results import ResultsManager
 
-__version__ = "0.1.4"
+__version__ = "0.1.5"
 __author__ = "Alex Thorpe"
 __license__ = "MIT"
 __description__ = "Vald8 is a minimalist, developer-first SDK for testing LLM-powered Python functions using structured JSONL datasets."
