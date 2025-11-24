@@ -7,7 +7,7 @@ Provides type-safe models with validation for all core Vald8 data structures.
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Literal, Optional, Union
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 class DatasetExample(BaseModel):
@@ -41,8 +41,7 @@ class DatasetExample(BaseModel):
             raise ValueError("Expected must be a non-empty dictionary")
         return v
     
-    class Config:
-        extra = "forbid"
+    model_config = ConfigDict(extra="forbid")
 
 
 class MetricResult(BaseModel):
@@ -310,4 +309,4 @@ class Vald8Config(BaseModel):
 
 
 # Update forward references
-EvaluationResult.update_forward_refs()
+EvaluationResult.model_rebuild()
