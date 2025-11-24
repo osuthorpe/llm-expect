@@ -59,6 +59,44 @@ Vald8 loads your dataset, runs the function against each example, and scores the
 
 ---
 
+## 🚀 Running Examples
+
+Vald8 comes with a realistic example script that demonstrates how to evaluate functions using real LLM APIs (OpenAI, Anthropic, Gemini).
+
+### Prerequisites
+
+1.  **Install SDKs**:
+    ```bash
+    pip install openai anthropic google-generativeai
+    ```
+
+2.  **Set API Keys**:
+    ```bash
+    export OPENAI_API_KEY="your-key-here"
+    export ANTHROPIC_API_KEY="your-key-here"
+    export GEMINI_API_KEY="your-key-here"
+    ```
+
+    **Alternatively, use a `.env` file:**
+    1. Copy `.env.example` to `.env`:
+       ```bash
+       cp .env.example .env
+       ```
+    2. Edit `.env` and add your API keys.
+
+### Run the Example
+
+```bash
+python examples/basic_example.py
+```
+
+This script will:
+1.  Load the evaluation dataset from `examples/eval_dataset.jsonl`.
+2.  Run evaluations on OpenAI GPT-5.1, Claude 3.5, and Gemini 1.5 (skipping any missing SDKs/keys).
+3.  Output pass/fail results and success rates for each model.
+
+---
+
 # 📁 JSONL Test Dataset Example
 
 Save as `tests.jsonl`:
