@@ -231,7 +231,7 @@ For more information, visit: https://github.com/osuthorpe/llm-expect
     parser.add_argument(
         '--version',
         action='version',
-        version='%(prog)s 0.1.8'
+        version='%(prog)s 0.1.9'
     )
     
     subparsers = parser.add_subparsers(dest='command', help='Available commands')

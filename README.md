@@ -44,7 +44,7 @@ pip install llm-expect
 ```
 
 **Package Name:** `llm-expect` on PyPI.
-**Version:** Currently v0.1.8.
+**Version:** Currently v0.1.9.
 
 ---
 
@@ -377,6 +377,29 @@ Most tests require **no API calls**.
 ```
 
 **Note:** There is no `llm-expect run` CLI command. You must execute your Python script to run evaluations. The CLI is strictly for managing results and validating datasets.
+
+## Pytest Integration & CI
+
+If you use `pytest` to run your tests, be aware that `@llm_expect` initializes at **import time**. If your environment lacks API keys (e.g., in CI), this can cause collection errors.
+
+**Best Practice:** Use `pytest_ignore_collect` in `conftest.py` to skip tests when keys are missing.
+
+```python
+# tests/conftest.py
+import os
+
+def pytest_ignore_collect(path, config):
+    """
+    Skip collection of tests that require LLM keys if they are missing.
+    This prevents ImportErrors or JudgeProviderErrors during collection.
+    """
+    # Check if we are collecting a file that uses llm-expect
+    if "test_llm.py" in str(path):
+        if not os.getenv("OPENAI_API_KEY"):
+            return True # Ignore this file
+    return False
+```
+
 
 ---
 

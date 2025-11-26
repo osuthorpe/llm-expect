@@ -34,12 +34,22 @@ class EvaluationRunner:
         # Initialize components
         self.results_manager = ResultsManager(config.results_dir)
         
+        # Lazy initialization for judge and metrics
+        self.metric_evaluator = None
+        self._judge_provider = None
+
+    def _ensure_initialized(self):
+        """Ensure judge provider and metric evaluator are initialized."""
+        if self.metric_evaluator is not None:
+            return
+
         # Initialize judge provider if needed
         judge_provider = None
-        tests = config.tests or []  # Defensive guard: handle None
-        if config.judge and any(test in ["instruction_adherence", "safety", "custom_judge"] for test in tests):
-            judge_provider = create_judge_provider(config.judge)
+        tests = self.config.tests or []  # Defensive guard: handle None
+        if self.config.judge and any(test in ["instruction_adherence", "safety", "custom_judge"] for test in tests):
+            judge_provider = create_judge_provider(self.config.judge)
         
+        self._judge_provider = judge_provider
         self.metric_evaluator = MetricEvaluator(judge_provider)
     
     def run_evaluation(self) -> EvaluationResult:
@@ -56,6 +66,9 @@ class EvaluationRunner:
         start_time = time.time()
         
         try:
+            # Ensure components are initialized
+            self._ensure_initialized()
+
             # Load dataset
             examples = load_dataset(
                 self.config.dataset,

@@ -5,6 +5,12 @@ All notable changes to **LLM Expect** (formerly Vald8) will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.9] - 2025-11-26
+
+### Changed
+- **Lazy Initialization**: Refactored `EvaluationRunner` to initialize judge providers and metrics only when `run_eval()` is called. This prevents `ImportError` or `JudgeProviderError` during test collection if API keys are missing.
+- **Documentation**: Added "Pytest Integration & CI" section to `README.md` and `llm.txt` with best practices for handling import-time side effects in CI environments.
+
 ## [0.1.8] - 2025-11-26
 
 ### Added
