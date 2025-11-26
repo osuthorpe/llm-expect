@@ -188,3 +188,16 @@ Results are saved in `runs/{date}_{session_id}/{function_name}/`.
 1.  **Do not mock the LLM** inside the decorated function. LLM Expect is for integration testing.
 2.  **Do not use `pytest` decorators** on the same function.
 3.  **JSONL paths**: Ensure the dataset path is relative to where the script is run.
+
+## Pytest Integration
+Since `@llm_expect` initializes at import time, missing API keys can cause collection errors.
+Use `pytest_ignore_collect` in `conftest.py` to skip files if keys are missing:
+
+```python
+# tests/conftest.py
+import os
+def pytest_ignore_collect(path, config):
+    if "test_llm.py" in str(path) and not os.getenv("OPENAI_API_KEY"):
+        return True
+    return False
+```
