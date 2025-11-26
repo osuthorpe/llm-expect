@@ -6,7 +6,9 @@ from llm_expect import llm_expect
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY")) if os.getenv("OPENAI_API_KEY") else None
 
-@llm_expect(dataset="examples/datasets/reference.jsonl")
+dataset_path = os.path.join(os.path.dirname(__file__), "../datasets/reference.jsonl")
+
+@llm_expect(dataset=os.path.join(os.path.dirname(__file__), "dataset.jsonl"))
 def reference_correct(prompt: str) -> str:
     """Correct implementation: Returns exact expected answer."""
     if client is None:
@@ -21,7 +23,7 @@ def reference_correct(prompt: str) -> str:
     )
     return response.choices[0].message.content.strip()
 
-@llm_expect(dataset="examples/datasets/reference.jsonl")
+@llm_expect(dataset=os.path.join(os.path.dirname(__file__), "dataset.jsonl"))
 def reference_incorrect(prompt: str) -> str:
     """Incorrect implementation: Returns wrong answer."""
     if client is None:

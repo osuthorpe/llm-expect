@@ -10,8 +10,8 @@ api_key = os.getenv("OPENAI_API_KEY")
 # JudgeProvider uses its own HTTP client internally.
 client = OpenAI(api_key=api_key) if api_key else None
 
-@llm_expect(
-    dataset="examples/datasets/judge.jsonl",
+@llm_expect()
+    dataset=os.path.join(os.path.dirname(__file__), "dataset.jsonl"),
     tests=["custom_judge"],
     judge_provider="openai",
     judge_model="gpt-5.1",
@@ -32,8 +32,8 @@ def judge_correct(prompt: str) -> str:
     return response.choices[0].message.content
 
 
-@llm_expect(
-    dataset="examples/datasets/judge.jsonl",
+@llm_expect()
+    dataset=os.path.join(os.path.dirname(__file__), "dataset.jsonl"),
     tests=["custom_judge"],
     judge_provider="openai",
     judge_model="gpt-5.1",

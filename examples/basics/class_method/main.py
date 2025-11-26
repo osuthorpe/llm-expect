@@ -2,7 +2,7 @@
 """
 Example: Using LLM Expect with Class Methods
 
-This example demonstrates how to use the @llm_expect decorator with class methods.
+This example demonstrates how to use the @llm_expect decorator with class methods.)
 LLM Expect supports decorating instance methods directly, handling `self` binding automatically.
 """
 
@@ -24,8 +24,10 @@ class ReleaseNoteGenerator:
         self.client = OpenAI(api_key=api_key) if api_key else None
         self.model = "gpt-4o-mini"
     
-    @llm_expect(
-        dataset="examples/datasets/release_notes.jsonl",
+    dataset_path = os.path.join(os.path.dirname(__file__), "../datasets/reference.jsonl")
+
+    @llm_expect()
+        dataset=os.path.join(os.path.dirname(__file__), "dataset.jsonl"),
         tests=["custom_judge"],
         judge_provider="openai",
         judge_model="gpt-4o-mini"

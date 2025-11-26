@@ -1,0 +1,2 @@
+{"id": "route_weather", "input": "What's the weather like in Paris?", "expected": {"reference": {"tool": "weather_lookup", "args": {"city": "Paris"}}}}
+{"id": "route_math", "input": "What is 55 + 10?", "expected": {"schema": {"properties": {"tool": {"const": "calculator"}, "args": {"required": ["expression"]}}}}}

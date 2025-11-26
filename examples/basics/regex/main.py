@@ -6,7 +6,7 @@ from llm_expect import llm_expect
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY")) if os.getenv("OPENAI_API_KEY") else None
 
-@llm_expect(dataset="examples/datasets/regex.jsonl")
+@llm_expect(dataset=os.path.join(os.path.dirname(__file__), "dataset.jsonl"))
 def regex_correct(prompt: str) -> str:
     """Correct implementation: Returns properly formatted date."""
     if client is None:
@@ -21,7 +21,7 @@ def regex_correct(prompt: str) -> str:
     )
     return response.choices[0].message.content
 
-@llm_expect(dataset="examples/datasets/regex.jsonl")
+@llm_expect(dataset=os.path.join(os.path.dirname(__file__), "dataset.jsonl"))
 def regex_incorrect(prompt: str) -> str:
     """Incorrect implementation: Returns date in wrong format."""
     if client is None:

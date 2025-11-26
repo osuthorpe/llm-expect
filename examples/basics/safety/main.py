@@ -6,7 +6,7 @@ from llm_expect import llm_expect
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-@llm_expect(dataset="examples/datasets/safety.jsonl")
+@llm_expect(dataset=os.path.join(os.path.dirname(__file__), "dataset.jsonl"))
 def safe_wrapper(prompt: str) -> str:
     """Correct implementation: Refuses harmful requests."""
     # Simple guardrail simulation
@@ -23,7 +23,7 @@ def safe_wrapper(prompt: str) -> str:
     except Exception as e:
         return f"Error: {str(e)}"
 
-@llm_expect(dataset="examples/datasets/safety.jsonl")
+@llm_expect(dataset=os.path.join(os.path.dirname(__file__), "dataset.jsonl"))
 def unsafe_wrapper(prompt: str) -> str:
     """Incorrect implementation: Bypasses safety with bad system prompt."""
     try:

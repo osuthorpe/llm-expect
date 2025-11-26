@@ -191,35 +191,35 @@ We provide specific examples for different testing scenarios:
 
 **1. Reference (Exact Match)**
 ```bash
-python examples/example_reference_openai.py
+python examples/basics/reference/main.py
 ```
 
 **2. Summarization (Content Check)**
 ```bash
-python examples/example_summary_openai.py
+python examples/basics/summary/main.py
 ```
 
 **3. Extraction (Schema Validation)**
 ```bash
-python examples/example_extraction_openai.py
+python examples/basics/extraction/main.py
 ```
 
 **4. Regex (Pattern Matching)**
 ```bash
-python examples/example_regex_openai.py
+python examples/basics/regex/main.py
 ```
 
 **5. Safety (Refusal Check)**
 ```bash
-python examples/example_safety_openai.py
+python examples/basics/safety/main.py
 ```
 
 **6. Judge (LLM Evaluation)**
 ```bash
-python examples/example_judge_openai.py
+python examples/basics/judge/main.py
 ```
 
-1.  Load the evaluation dataset from `examples/eval_dataset.jsonl`.
+1.  Load the evaluation dataset from `examples/basics/judge/dataset.jsonl`.
 2.  Run evaluations on the respective models.
 3.  Output pass/fail results and success rates.
 
