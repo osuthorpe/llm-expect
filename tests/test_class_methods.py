@@ -1,7 +1,7 @@
 
 import pytest
 import os
-from vald8.decorator import vald8
+from llm_expect.decorator import llm_expect
 
 # Create a dummy dataset for testing
 @pytest.fixture
@@ -21,7 +21,7 @@ class TestClassMethods:
             def __init__(self):
                 self.prefix = "test_"
                 
-            @vald8(dataset=class_test_dataset)
+            @llm_expect(dataset=class_test_dataset)
             def process(self, value):
                 return self.prefix + value
         

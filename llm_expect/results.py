@@ -10,7 +10,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from .errors import Vald8Error
+from .errors import LLMExpectError, EvaluationError
 from .models import EvaluationResult, EvaluationSummary, MetricResult, TestResult
 from .reporting import HTMLReporter
 
@@ -34,7 +34,7 @@ class ResultsManager:
             Path to the saved results directory
             
         Raises:
-            Vald8Error: If saving fails
+            EvaluationError: If saving fails
         """
         try:
             # Get session ID for grouping
@@ -97,7 +97,11 @@ class ResultsManager:
             return str(run_dir)
             
         except Exception as e:
-            raise Vald8Error(f"Failed to save results: {str(e)}")
+            raise EvaluationError(
+                f"Failed to save results: {str(e)}",
+                function_name=result.function_name,
+                original_error=e
+            )
     
     def _generate_text_report(self, result: EvaluationResult, report_file: Path) -> None:
         """Generate a human-readable text report."""

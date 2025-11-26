@@ -9,8 +9,8 @@ from typing import Any, Dict, List, Optional, Union
 import traceback
 
 
-class Vald8Error(Exception):
-    """Base exception class for all Vald8 errors."""
+class LLMExpectError(Exception):
+    """Custom exceptions for llm-expect."""
     
     def __init__(self, message: str, context: Optional[Dict[str, Any]] = None):
         self.message = message
@@ -24,7 +24,7 @@ class Vald8Error(Exception):
         return self.message
 
 
-class ValidationError(Vald8Error):
+class ValidationError(LLMExpectError):
     """Raised when validation fails for inputs, datasets, or configurations."""
     
     def __init__(
@@ -77,7 +77,7 @@ class DatasetValidationError(ValidationError):
         super().__init__(message, errors, context)
 
 
-class ConfigurationError(Vald8Error):
+class ConfigurationError(LLMExpectError):
     """Raised when configuration is invalid or missing."""
     
     def __init__(
@@ -98,7 +98,7 @@ class ConfigurationError(Vald8Error):
         super().__init__(message, context)
 
 
-class EvaluationError(Vald8Error):
+class EvaluationError(LLMExpectError):
     """Raised when evaluation fails during function execution or metric calculation."""
     
     def __init__(
@@ -121,7 +121,7 @@ class EvaluationError(Vald8Error):
         self.original_error = original_error
 
 
-class JudgeProviderError(Vald8Error):
+class JudgeProviderError(LLMExpectError):
     """Raised when judge provider fails to evaluate responses."""
     
     def __init__(
@@ -148,7 +148,7 @@ class JudgeProviderError(Vald8Error):
         super().__init__(message, context)
 
 
-class MetricCalculationError(Vald8Error):
+class MetricCalculationError(LLMExpectError):
     """Raised when metric calculation fails."""
     
     def __init__(

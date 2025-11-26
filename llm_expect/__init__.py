@@ -6,7 +6,7 @@ with structured datasets, configurable metrics, and threshold-based validation.
 """
 
 # Core decorator and convenience functions
-from .decorator import vald8, pytest_for_llms, llm_test
+from .decorator import llm_expect, pytest_for_llms, llm_test
 
 # Data models
 from .models import (
@@ -15,13 +15,13 @@ from .models import (
     EvaluationSummary,
     TestResult,
     MetricResult, 
-    Vald8Config,
+    LLMExpectConfig,
     JudgeConfig
 )
 
 # Error types
 from .errors import (
-    Vald8Error,
+    LLMExpectError,
     ValidationError, 
     DatasetValidationError, 
     ConfigurationError,
@@ -42,7 +42,7 @@ __description__ = "Vald8 is a minimalist, developer-first SDK for testing LLM-po
 
 __all__ = [
     # Core decorator
-    "vald8",
+    "llm_expect",
     "pytest_for_llms", 
     "llm_test",
     
@@ -52,11 +52,11 @@ __all__ = [
     "EvaluationSummary",
     "TestResult",
     "MetricResult",
-    "Vald8Config",
+    'LLMExpectConfig',
     "JudgeConfig",
     
     # Error types
-    "Vald8Error",
+    "LLMExpectError",
     "ValidationError",
     "DatasetValidationError", 
     "ConfigurationError",

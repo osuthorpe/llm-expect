@@ -3,7 +3,7 @@ requires = ["hatchling>=1.8.0"]
 build-backend = "hatchling.build"
 
 [project]
-name = "vald8"
+name = "llm-expect"
 version = "0.1.6"
 description = "Vald8 is a minimalist, developer-first SDK for testing LLM-powered Python functions using structured JSONL datasets."
 readme = "README.md"
@@ -72,14 +72,14 @@ Issues = "https://github.com/osuthorpe/vald8-sdk/issues"
 Changelog = "https://github.com/osuthorpe/vald8-sdk/blob/main/CHANGELOG.md"
 
 [project.scripts]
-vald8 = "vald8.cli:main"
+llm-expect = "llm_expect.cli:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["vald8"]
+packages = ["llm_expect"]
 
 [tool.hatch.build.targets.sdist]
 include = [
-    "/vald8",
+    "/llm_expect",
     "/tests",
     "/examples", 
     "/README.md",
@@ -161,11 +161,11 @@ module = [
 ignore_missing_imports = true
 
 [tool.coverage.run]
-source = ["vald8"]
+source = ["llm_expect"]
 omit = [
     "*/tests/*",
     "*/test_*",
-    "vald8/__main__.py"
+    "llm_expect/__main__.py"
 ]
 
 [tool.coverage.report]

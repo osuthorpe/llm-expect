@@ -1,6 +1,6 @@
 # Metrics
 
-Vald8 automatically selects appropriate metrics based on your dataset expectations.
+LLM Expect calculates several metrics based on your test results.
 
 ## Accuracy
 

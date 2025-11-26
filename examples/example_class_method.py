@@ -10,7 +10,7 @@ import os
 from typing import List
 from dotenv import load_dotenv
 from openai import OpenAI
-from vald8 import vald8
+from llm_expect import llm_expect
 
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
@@ -24,7 +24,7 @@ class ReleaseNoteGenerator:
         self.client = OpenAI(api_key=api_key) if api_key else None
         self.model = "gpt-4o-mini"
     
-    @vald8(
+    @llm_expect(
         dataset="examples/datasets/release_notes.jsonl",
         tests=["custom_judge"],
         judge_provider="openai",

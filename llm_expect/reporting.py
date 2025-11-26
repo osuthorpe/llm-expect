@@ -1,5 +1,5 @@
 """
-HTML Reporting module for Vald8.
+HTML Reporting module for LLM Expect.
 """
 
 import json
@@ -17,7 +17,7 @@ HTML_TEMPLATE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vald8 Report - {{ result.function_name }}</title>
+    <title>LLM Expect Report - {{ result.function_name }}</title>
     <style>
         :root {
             --primary: #4f46e5;
@@ -186,7 +186,7 @@ HTML_TEMPLATE = """
     <div class="container">
         <div class="header">
             <div class="title">
-                <h1>Vald8 Report: {{ result.function_name }}</h1>
+                <h1>LLM Expect Report: {{ result.function_name }}</h1>
                 <div class="meta">
                     Run ID: {{ result.run_id }} • {{ result.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}
                 </div>

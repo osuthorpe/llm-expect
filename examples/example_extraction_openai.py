@@ -2,12 +2,12 @@ import os
 import json
 from dotenv import load_dotenv
 from openai import OpenAI
-from vald8 import vald8
+from llm_expect import llm_expect
 
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-@vald8(dataset="examples/datasets/extraction.jsonl")
+@llm_expect(dataset="examples/datasets/extraction.jsonl")
 def extract_correct(prompt: str) -> str:
     """Correct implementation: Uses proper system prompt to extract structured JSON."""
     try:
@@ -23,7 +23,7 @@ def extract_correct(prompt: str) -> str:
     except Exception as e:
         return json.dumps({"error": str(e)})
 
-@vald8(dataset="examples/datasets/extraction.jsonl")
+@llm_expect(dataset="examples/datasets/extraction.jsonl")
 def extract_incorrect(prompt: str) -> str:
     """Incorrect implementation: Uses bad system prompt that produces narrative text instead of JSON."""
     try:

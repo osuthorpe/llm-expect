@@ -1,13 +1,13 @@
 # Contributing
 
-We welcome contributions to Vald8!
+Thank you for your interest in contributing to LLM Expect!
 
 ## Development Setup
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/osuthorpe/vald8.git
-cd vald8
+git clone https://github.com/yourusername/llm-expect.git
+cd llm-expect
 ```
 
 2. Create a virtual environment:

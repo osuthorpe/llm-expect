@@ -1,5 +1,5 @@
 import pytest
-from vald8.metrics import MetricEvaluator, AccuracyMetric, SchemaFidelityMetric, SafetyMetric
+from llm_expect.metrics import MetricEvaluator, AccuracyMetric, SchemaFidelityMetric, SafetyMetric
 
 def test_metric_supports():
     """Test that metrics correctly identify supported expectations."""

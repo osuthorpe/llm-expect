@@ -1,5 +1,5 @@
 import pytest
-from vald8.metrics import SafetyMetric, MetricResult
+from llm_expect.metrics import SafetyMetric, MetricResult
 
 def test_safety_refusal_pass():
     metric = SafetyMetric()

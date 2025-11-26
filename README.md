@@ -1,6 +1,6 @@
-# 🧪 Vald8 — Lightweight Evaluation Framework for LLM Reliability
+# 🧪 LLM Expect — Lightweight Evaluation Framework for LLM Reliability
 
-Vald8 is a minimalist, developer-first SDK for testing LLM-powered Python functions using structured JSONL datasets.
+LLM Expect is a minimalist, developer-first SDK for testing LLM-powered Python functions using structured JSONL datasets.
 
 > 🤖 **For AI Assistants:** Read [`LLM_INSTRUCTIONS.md`](LLM_INSTRUCTIONS.md) for implementation patterns.
 
@@ -17,7 +17,7 @@ Focus: **Make LLM evaluation as easy as pytest. Nothing more. Nothing less.**
 
 ---
 
-# Why Vald8?
+# Why LLM Expect?
 
 If you're building with LLMs, you need a way to verify that your AI functions:
 
@@ -27,7 +27,7 @@ If you're building with LLMs, you need a way to verify that your AI functions:
 - behave consistently across environments  
 - meet quality thresholds before deployment  
 
-Vald8 gives you this with:
+LLM Expect gives you this with:
 
 - ✔ One decorator  
 - ✔ One JSONL file  
@@ -40,7 +40,7 @@ No configuration. No complexity. No over-engineering.
 # Install
 
 ```bash
-pip install vald8
+pip install llm-expect
 ```
 
 ---
@@ -50,20 +50,20 @@ pip install vald8
 You decorate any LLM function:
 
 ```python
-from vald8 import vald8
+from llm_expect import llm_expect
 
-@vald8(dataset="tests.jsonl")
+@llm_expect(dataset="tests.jsonl")
 def generate(prompt: str) -> dict:
     ...
 ```
 
-Vald8 loads your dataset, runs the function against each example, and scores the results.
+LLM Expect loads your dataset, runs the function against each example, and scores the results.
 
 ---
 
 ## Running Examples
 
-Vald8 comes with a realistic example script that demonstrates how to evaluate functions using real LLM APIs (OpenAI, Anthropic, Gemini).
+LLM Expect comes with a realistic example script that demonstrates how to evaluate functions using real LLM APIs (OpenAI, Anthropic, Gemini).
 
 ### Prerequisites
 
@@ -126,14 +126,14 @@ python examples/example_judge_openai.py
 
 ### 🖥️ Rich CLI
 
-Vald8 includes a beautiful CLI for managing results:
+LLM Expect includes a beautiful CLI for managing results:
 
 ```bash
 # List recent runs
-vald8 runs list
+llm-expect runs list
 
 # Show detailed results for a run
-vald8 runs show runs/2025-11-25_...
+llm-expect runs show runs/2025-11-25_...
 ```
 
 ---
@@ -205,12 +205,12 @@ Uses an LLM to evaluate the output based on a custom prompt. Requires `judge_pro
 
 ## ⚙️ Configuration
 
-Vald8 supports configuration through decorator parameters and environment variables.
+LLM Expect supports configuration through decorator parameters and environment variables.
 
 ### Decorator Parameters
 
 ```python
-@vald8(
+@llm_expect(
     dataset="path/to/dataset.jsonl",       # Required: Path to JSONL dataset
     tests=["accuracy", "schema_fidelity"], # Optional: Metrics to evaluate (default: [])
     thresholds={"accuracy": 0.9},          # Optional: Pass/fail thresholds (default: 0.8)
@@ -269,10 +269,10 @@ For LLM-as-judge metrics (`instruction_adherence`, `safety`, `custom_judge`):
 # 🧪 Decorating an LLM Function
 
 ```python
-from vald8 import vald8
+from llm_expect import llm_expect
 import openai
 
-@vald8(dataset="tests.jsonl")
+@llm_expect(dataset="tests.jsonl")
 def generate(prompt: str) -> dict:
     response = openai.chat.completions.create(
         model="gpt-4o-mini",
@@ -312,7 +312,7 @@ Overall: 3/4 passed (75%)
 Useful for long-form or fuzzy outputs.
 
 ```python
-@vald8(
+@llm_expect(
     dataset="tests.jsonl",
     tests=["schema", "contains", "reference"],
     thresholds={"success_rate": 0.9},
@@ -332,7 +332,7 @@ Most tests require **no API calls**.
 # CI/CD Integration
 
 ```yaml
-- name: Run Vald8 Tests
+- name: Run LLM Expect Tests
   run: |
     python -c "
     from my_llm import generate
@@ -408,7 +408,7 @@ For metrics that require an LLM judge (`instruction_adherence`, `safety`, `custo
 
 ## 📁 Results Folder Structure
 
-Vald8 automatically saves evaluation results in a session-based hierarchy:
+LLM Expect automatically saves evaluation results in a session-based hierarchy:
 
 ```
 runs/

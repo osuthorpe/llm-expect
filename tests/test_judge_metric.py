@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import MagicMock
-from vald8.metrics import CustomJudgeMetric, MetricResult
-from vald8.judges import BaseJudgeProvider
+from llm_expect.metrics import CustomJudgeMetric, MetricResult
+from llm_expect.judges import BaseJudgeProvider
 
 class MockJudgeProvider(BaseJudgeProvider):
     def evaluate_instruction_adherence(self, actual, instruction, test_id):
@@ -64,6 +64,6 @@ def test_custom_judge_metric_no_provider():
     # Should raise error or return failed result depending on implementation
     # Current impl raises MetricCalculationError which is caught and returned as failed result in evaluator
     # But calling evaluate directly raises it
-    from vald8.errors import MetricCalculationError
+    from llm_expect.errors import MetricCalculationError
     with pytest.raises(MetricCalculationError):
         metric.evaluate("actual", expected, "test_3")

@@ -1,6 +1,6 @@
-# Expectations
+# Expectations & Metric
 
-Vald8 supports multiple expectation types in your dataset.
+LLM Expect supports multiple expectation types in your dataset.
 
 ## Reference (Exact Match)
 

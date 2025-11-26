@@ -1,6 +1,6 @@
 import time
 import pytest
-from vald8 import vald8
+from llm_expect import llm_expect
 
 @pytest.fixture
 def temp_dataset(tmp_path):
@@ -14,12 +14,12 @@ def temp_dataset(tmp_path):
 def test_parallel_execution(temp_dataset):
     """Test that parallel execution is faster than serial for slow functions."""
     
-    @vald8(dataset=temp_dataset, parallel=True)
+    @llm_expect(dataset=temp_dataset, parallel=True)
     def slow_parallel(input_str: str) -> str:
         time.sleep(0.5)
         return "test"
         
-    @vald8(dataset=temp_dataset, parallel=False)
+    @llm_expect(dataset=temp_dataset, parallel=False)
     def slow_serial(input_str: str) -> str:
         time.sleep(0.5)
         return "test"

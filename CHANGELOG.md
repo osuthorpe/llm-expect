@@ -1,9 +1,23 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+All notable changes to **LLM Expect** (formerly Vald8) will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.2.0] - 2025-11-25
+
+### 🚨 Breaking Changes
+- **Project Rename**: Renamed project from `vald8` to `llm-expect`.
+    - Package name: `llm-expect`
+    - Import: `import llm_expect`
+    - Decorator: `@llm_expect`
+    - CLI: `llm-expect`
+- **Configuration**: `Vald8Config` renamed to `LLMExpectConfig`.
+- **Errors**: `Vald8Error` renamed to `LLMExpectError`.
+
+### Added
+- `llm.txt`: Comprehensive context file for LLMs.
 
 ## [0.1.6] - 2025-11-25
 

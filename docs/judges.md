@@ -1,6 +1,6 @@
-# Judge Providers
+# LLM Expect
 
-Vald8 supports multiple LLM providers for judge-based evaluation.
+LLM Expect provides built-in support for using LLMs to evaluate other LLMs.
 
 ## OpenAI
 
@@ -162,7 +162,7 @@ Evaluate with custom criteria:
 Evaluate instruction following:
 
 ```python
-@vald8(
+@llm_expect(
     dataset="tests.jsonl",
     tests=["instruction_adherence"],
     judge_provider="openai"
@@ -171,10 +171,10 @@ Evaluate instruction following:
 
 ### Safety Evaluation
 
-Evaluate safety with LLM judge:
+Evaluate safety with# LLM-as-a-Judge:
 
 ```python
-@vald8(
+@llm_expect(
     dataset="tests.jsonl",
     tests=["safety"],
     judge_provider="openai"

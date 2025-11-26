@@ -1,6 +1,6 @@
 import pytest
 from pathlib import Path
-from vald8 import vald8
+from llm_expect import llm_expect
 
 @pytest.fixture
 def temp_dataset(tmp_path):
@@ -16,7 +16,7 @@ def test_html_report_generation(temp_dataset, tmp_path):
     
     results_dir = tmp_path / "runs"
     
-    @vald8(dataset=temp_dataset, results_dir=str(results_dir))
+    @llm_expect(dataset=temp_dataset, results_dir=str(results_dir))
     def simple_func(input_str: str) -> str:
         return "test"
         
@@ -30,5 +30,5 @@ def test_html_report_generation(temp_dataset, tmp_path):
     
     # Check content
     content = html_report.read_text()
-    assert "Vald8 Report" in content
+    assert "LLM Expect Report" in content
     assert "simple_func" in content

@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
 from .errors import ConfigurationError, ValidationError
-from .models import JudgeConfig, Vald8Config
+from .models import JudgeConfig, LLMExpectConfig
 
 
 class ConfigManager:
@@ -34,7 +34,7 @@ class ConfigManager:
         fail_fast: bool = False,
         timeout: int = 60,
         **kwargs
-    ) -> Vald8Config:
+    ) -> LLMExpectConfig:
         """
         Create a Vald8Config from parameters with environment variable fallbacks.
         
@@ -83,7 +83,7 @@ class ConfigManager:
                 config_dict["judge"] = judge_config
             
             # Create and validate config
-            config = Vald8Config(**config_dict)
+            config = LLMExpectConfig(**config_dict)
             
             # Post-creation validation
             self._validate_paths(config)
@@ -170,7 +170,7 @@ class ConfigManager:
         
         return thresholds
     
-    def _validate_paths(self, config: Vald8Config) -> None:
+    def _validate_paths(self, config: LLMExpectConfig) -> None:
         """Validate file and directory paths in configuration."""
         
         # Check dataset file exists
@@ -259,7 +259,7 @@ class ConfigManager:
             return [item.strip() for item in value.split(",") if item.strip()]
         return None
     
-    def load_from_file(self, file_path: str) -> Vald8Config:
+    def load_from_file(self, file_path: str) -> LLMExpectConfig:
         """
         Load configuration from JSON or TOML file.
         
@@ -314,7 +314,7 @@ class ConfigManager:
             if judge_data:
                 data["judge"] = JudgeConfig(**judge_data)
             
-            return Vald8Config(**data)
+            return LLMExpectConfig(**data)
             
         except Exception as e:
             if isinstance(e, ConfigurationError):
@@ -325,7 +325,7 @@ class ConfigManager:
                 config_value=file_path
             )
     
-    def save_to_file(self, config: Vald8Config, file_path: str) -> None:
+    def save_to_file(self, config: LLMExpectConfig, file_path: str) -> None:
         """
         Save configuration to JSON file.
         

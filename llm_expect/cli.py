@@ -1,5 +1,5 @@
 """
-Command-line interface for Vald8.
+Command-line interface for llm-expect.
 
 Provides CLI commands for running evaluations, managing results, and validating datasets.
 """
@@ -17,7 +17,7 @@ from rich.text import Text
 
 from .config import config_manager
 from .dataset import validate_dataset_format
-from .errors import Vald8Error
+from .errors import LLMExpectError
 from .results import ResultsManager
 
 
@@ -114,7 +114,7 @@ def show_run_cmd(args) -> int:
         
         console.print(Panel(
             f"[bold {status_color}]{status_text}[/bold {status_color}] - {result.function_name}",
-            title="Vald8 Evaluation Run",
+            title="llm-expect Evaluation Run",
             subtitle=result.run_id
         ))
         
@@ -217,14 +217,11 @@ def create_parser() -> argparse.ArgumentParser:
     """Create the argument parser."""
     
     parser = argparse.ArgumentParser(
-        prog='vald8',
-        description='pytest for LLMs - Evaluate your LLM functions with structured datasets',
+        prog="llm-expect",
+        description="LLM Expect - Evaluation Framework for LLM Functions",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  vald8 validate tests.jsonl           # Validate dataset format
-  vald8 runs list                      # List recent evaluation runs  
-  vald8 runs show ./runs/2024-01-01_*  # Show run details
   vald8 runs cleanup --keep 10         # Keep only 10 most recent runs
 
 For more information, visit: https://github.com/osuthorpe/vald8

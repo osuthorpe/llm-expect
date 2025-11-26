@@ -7,7 +7,7 @@ Vald8 provides complete examples for all test types.
 Tests exact string matching:
 
 ```python
-from vald8 import vald8
+from llm_expect import llm_expect
 import openai
 
 @vald8(dataset="examples/datasets/reference.jsonl")

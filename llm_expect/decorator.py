@@ -1,5 +1,5 @@
 """
-Core @vald8 decorator and Runner implementation.
+Core @llm_expect decorator and Runner implementation.
 
 Provides the main decorator interface and evaluation runner that coordinates
 all components to evaluate LLM functions.
@@ -17,7 +17,7 @@ from .dataset import load_dataset
 from .errors import EvaluationError, handle_evaluation_error
 from .judges import create_judge_provider
 from .metrics import MetricEvaluator
-from .models import DatasetExample, EvaluationResult, TestResult, Vald8Config
+from .models import DatasetExample, EvaluationResult, TestResult, LLMExpectConfig
 from .results import ResultsManager, calculate_summary_stats, generate_run_id
 
 F = TypeVar('F', bound=Callable[..., Any])
@@ -26,7 +26,7 @@ F = TypeVar('F', bound=Callable[..., Any])
 class EvaluationRunner:
     """Coordinates evaluation of a function against a dataset."""
     
-    def __init__(self, func: Callable, config: Vald8Config):
+    def __init__(self, func: Callable, config: LLMExpectConfig):
         self.func = func
         self.config = config
         self.function_name = func.__name__
@@ -255,10 +255,10 @@ class EvaluationRunner:
             )
 
 
-class Vald8Function:
+class LLMExpectFunction:
     """Wrapper class that adds evaluation capabilities to a function."""
     
-    def __init__(self, func: Callable, config: Vald8Config):
+    def __init__(self, func: Callable, config: LLMExpectConfig):
         self.func = func
         self.config = config
         self.runner = EvaluationRunner(func, config)
@@ -283,7 +283,7 @@ class Vald8Function:
         
         # Return a new Vald8Function wrapping the bound method, sharing the config
         # We need to ensure the new wrapper shares the same config object
-        wrapper = Vald8Function(bound_func, self.config)
+        wrapper = LLMExpectFunction(bound_func, self.config)
         return wrapper
     
     def __call__(self, *args, **kwargs):
@@ -317,7 +317,7 @@ class Vald8Function:
             "dataset_path": result.dataset_path
         }
     
-    def get_config(self) -> Vald8Config:
+    def get_config(self) -> LLMExpectConfig:
         """Get the current configuration."""
         return self.config
     
@@ -333,7 +333,7 @@ class Vald8Function:
         self.runner = EvaluationRunner(self.func, self.config)
 
 
-def vald8(
+def llm_expect(
     dataset: str,
     tests: Optional[List[str]] = None,
     thresholds: Optional[Dict[str, float]] = None,
@@ -347,7 +347,7 @@ def vald8(
     fail_fast: bool = False,
     timeout: int = 60,
     **kwargs
-) -> Callable[[F], Vald8Function]:
+) -> Callable[[F], LLMExpectFunction]:
     """
     Decorator to add evaluation capabilities to LLM functions.
     
@@ -370,7 +370,7 @@ def vald8(
         Decorated function with evaluation capabilities
     
     Example:
-        @vald8(dataset="tests.jsonl")
+        @llm_expect(dataset="tests.jsonl")
         def my_llm_function(prompt: str) -> dict:
             return call_llm(prompt)
         
@@ -382,7 +382,7 @@ def vald8(
         print(f"Passed: {eval_results['passed']}")
     """
     
-    def decorator(func: F) -> Vald8Function:
+    def decorator(func: F) -> LLMExpectFunction:
         # Create configuration
         config = config_manager.create_config(
             dataset=dataset,
@@ -400,35 +400,35 @@ def vald8(
             **kwargs
         )
         
-        return Vald8Function(func, config)
+        return LLMExpectFunction(func, config)
     
     return decorator
 
 
 # Convenience aliases for common patterns
-def pytest_for_llms(dataset: str, **kwargs) -> Callable[[F], Vald8Function]:
+def pytest_for_llms(dataset: str, **kwargs) -> Callable[[F], LLMExpectFunction]:
     """
-    Alias for vald8 decorator emphasizing the pytest-like usage.
+    Alias for llm_expect decorator emphasizing the pytest-like usage.
     
     Args:
         dataset: Path to JSONL dataset file  
-        **kwargs: Same as vald8 decorator
+        **kwargs: Same as llm_expect decorator
     
     Returns:
         Decorated function with evaluation capabilities
     """
-    return vald8(dataset=dataset, **kwargs)
+    return llm_expect(dataset=dataset, **kwargs)
 
 
-def llm_test(dataset: str, **kwargs) -> Callable[[F], Vald8Function]:
+def llm_test(dataset: str, **kwargs) -> Callable[[F], LLMExpectFunction]:
     """
-    Another alias for vald8 decorator for concise usage.
+    Another alias for llm_expect decorator for concise usage.
     
     Args:
         dataset: Path to JSONL dataset file
-        **kwargs: Same as vald8 decorator
+        **kwargs: Same as llm_expect decorator
     
     Returns:
         Decorated function with evaluation capabilities  
     """
-    return vald8(dataset=dataset, **kwargs)
+    return llm_expect(dataset=dataset, **kwargs)

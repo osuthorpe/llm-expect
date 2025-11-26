@@ -1,8 +1,8 @@
-# Configuration
+# ⚙️ Configuration Reference
 
 ## Decorator Parameters
 
-Configure Vald8 using the `@vald8` decorator:
+Configure LLM Expect using the `@llm_expect` decorator:
 
 | Argument | Type | Default | Description |
 |----------|------|---------|-------------|
@@ -66,7 +66,7 @@ export OPENAI_API_KEY=your-key-here
 ```
 
 ```python
-@vald8(dataset="tests.jsonl")  # Other config from env vars
+@llm_expect(dataset="tests.jsonl")  # Other config from env vars
 def generate(prompt: str) -> str:
     # Your function
     pass

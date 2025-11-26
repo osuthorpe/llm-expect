@@ -9,15 +9,18 @@ import pytest
 from pathlib import Path
 from unittest.mock import Mock, patch
 
-from vald8 import (
-    vald8, 
+from llm_expect import llm_expect
+from llm_expect.models import EvaluationResult, TestResult
+
+from llm_expect import (
     DatasetExample,
     ValidationError,
     DatasetValidationError,
-    load_dataset,
-    load_dataset,
+    ConfigurationError,
+    EvaluationError,
     validate_dataset_format
 )
+from llm_expect.dataset import load_dataset
 from pydantic import ValidationError as PydanticValidationError
 
 
@@ -69,7 +72,7 @@ def test_basic_decorator():
     
     try:
         # Simple function with decorator
-        @vald8(dataset=str(test_dataset))
+        @llm_expect(dataset=str(test_dataset))
         def simple_math(expr: str) -> str:
             """Simple math function for testing."""
             if expr == "2+2":
@@ -109,7 +112,7 @@ def test_function_call_patterns():
     
     try:
         # Function that handles primitive input
-        @vald8(dataset=str(test_dataset), sample_size=1)
+        @llm_expect(dataset=str(test_dataset), sample_size=1)
         def echo_function(text: str) -> str:
             return f"Echo: {text}"
         
@@ -118,7 +121,7 @@ def test_function_call_patterns():
         assert "test" in result
         
         # Function that handles dict input  
-        @vald8(dataset=str(test_dataset), sample_size=1)
+        @llm_expect(dataset=str(test_dataset), sample_size=1)
         def dict_function(name: str, age: int) -> str:
             return f"{name} is {age} years old"
         
@@ -221,7 +224,7 @@ def test_nonexistent_dataset():
 def test_decorator_aliases():
     """Test decorator aliases work correctly."""
     
-    from vald8 import pytest_for_llms, llm_test
+    from llm_expect import pytest_for_llms, llm_test
     
     test_dataset = Path("test_aliases.jsonl") 
     with open(test_dataset, 'w') as f:

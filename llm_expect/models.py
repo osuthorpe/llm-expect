@@ -141,7 +141,7 @@ class EvaluationResult(BaseModel):
     timestamp: datetime = Field(default_factory=datetime.now, description="When evaluation ran")
     
     # Configuration used
-    config: 'Vald8Config' = Field(..., description="Configuration used for evaluation")
+    config: 'LLMExpectConfig' = Field(..., description="Configuration used for evaluation")
     
     # Results
     tests: List[TestResult] = Field(..., description="Individual test results")
@@ -196,7 +196,7 @@ class JudgeConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
 
-class Vald8Config(BaseModel):
+class LLMExpectConfig(BaseModel):
     """Main configuration for Vald8 evaluation."""
     
     # Dataset configuration

@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
-from vald8 import vald8
+from llm_expect import llm_expect
 
 # Load environment variables
 load_dotenv()

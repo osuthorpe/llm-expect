@@ -1,38 +1,38 @@
-# 🤖 Vald8 Instructions for LLMs
+# 🤖 LLM Expect Instructions for LLMs
 
-This file contains instructions for AI assistants (Cursor, Copilot, Windsurf, etc.) to correctly implement and use the Vald8 SDK.
+This file contains instructions for AI assistants (Cursor, Copilot, Windsurf, etc.) to correctly implement and use the LLM Expect SDK.
 
 ## 🚀 Core Identity
-**Vald8** is a minimalist Python SDK for evaluating LLM functions using a decorator-based approach and JSONL datasets. It is designed to be as simple as `pytest`.
+**LLM Expect** is a minimalist Python SDK for evaluating LLM functions using a decorator-based approach and JSONL datasets. It is designed to be as simple as `pytest`.
 
 ## 📦 Installation
 ```bash
-pip install vald8
+pip install llm-expect
 ```
 
 ## 🔑 Key Patterns
 
 ### 1. The Decorator Pattern
-Vald8 works by decorating a **standalone function**.
+LLM Expect works by decorating a **standalone function**.
 
 ```python
-from vald8 import vald8
+from llm_expect import llm_expect
 
-@vald8(dataset="tests.jsonl")
+@llm_expect(dataset="tests.jsonl")
 def my_llm_function(prompt: str) -> str:
     # Call LLM here
     return "response"
 ```
 
 ### 2. Class Methods
-Vald8 supports decorating instance methods directly. The decorator handles `self` binding automatically.
+LLM Expect supports decorating instance methods directly. The decorator handles `self` binding automatically.
 
 ```python
 class MyClass:
     def __init__(self):
         self.client = OpenAI()
 
-    @vald8(dataset="tests.jsonl")
+    @llm_expect(dataset="tests.jsonl")
     def generate(self, prompt: str):
         # 'self' is available here!
         return self.client.generate(prompt)
@@ -171,17 +171,17 @@ For metrics that require an LLM judge (`instruction_adherence`, `safety`, `custo
 
 ### 🧠 Common Pitfalls to Avoid
 
-1.  **Do not mock the LLM inside the decorated function.** Vald8 is for *integration testing* with real LLMs.
-2.  **Do not use `pytest` decorators on the same function.** Vald8 is its own test runner.
+1.  **Do not mock the LLM inside the decorated function.** LLM Expect is for *integration testing* with real LLMs.
+2.  **Do not use `pytest` decorators on the same function.** LLM Expect is its own test runner.
 3.  **JSONL paths.** Ensure the dataset path is relative to where the script is run, or use absolute paths.
 4.  **JSONL paths.** Ensure the dataset path is relative to where the script is run, or use absolute paths.
 
 ## 📝 Complete Example Implementation
 
-Here is a robust example showing how to implement Vald8 with multiple metrics.
+Here is a robust example showing how to implement LLM Expect with multiple metrics.
 
 ```python
-from vald8 import vald8
+from llm_expect import llm_expect
 import os
 from openai import OpenAI
 
@@ -190,7 +190,7 @@ class StoryGenerator:
     def __init__(self):
         self.client = OpenAI()
 
-    @vald8(
+    @llm_expect(
         dataset="stories.jsonl",
         tests=["custom_judge", "safety"],
         judge_provider="openai",

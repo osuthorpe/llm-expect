@@ -8,7 +8,7 @@
 ## Install from PyPI
 
 ```bash
-pip install vald8
+pip install llm-expect
 ```
 
 ## Install from Source
@@ -31,17 +31,17 @@ print(vald8.__version__)
 For development:
 
 ```bash
-pip install vald8[dev]
+pip install "llm-expect[dev]"
 ```
 
 For documentation:
 
 ```bash
-pip install vald8[docs]
+pip install "llm-expect[docs]"
 ```
 
 For everything:
 
 ```bash
-pip install vald8[all]
+pip install llm-expect[all]
 ```

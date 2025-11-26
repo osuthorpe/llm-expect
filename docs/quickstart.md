@@ -1,4 +1,4 @@
-# Quick Start
+# Quickstart
 
 ## 1. Create a Dataset
 
@@ -12,10 +12,10 @@ Create a JSONL file with test cases (`tests.jsonl`):
 ## 2. Decorate Your Function
 
 ```python
-from vald8 import vald8
+from llm_expect import llm_expect
 import openai
 
-@vald8(dataset="tests.jsonl")
+@llm_expect(dataset="tests.jsonl")
 def generate(prompt: str) -> str:
     response = openai.chat.completions.create(
         model="gpt-4",
