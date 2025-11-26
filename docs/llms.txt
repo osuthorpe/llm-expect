@@ -1,0 +1,103 @@
+# LLM Expect - Quick Reference for AI Assistants
+
+## What is LLM Expect?
+LLM Expect is a pytest-like evaluation framework for LLM functions. It uses JSONL datasets to validate outputs against expectations.
+
+## Core Pattern
+```python
+from llm_expect import llm_expect
+
+@llm_expect(dataset="tests.jsonl")
+def my_llm_function(prompt: str) -> str:
+    # Call LLM here
+    return "response"
+```
+
+### 2. Class Methods
+LLM Expect supports decorating instance methods directly. The decorator handles `self` binding automatically.
+
+```python
+class MyClass:
+    def __init__(self):
+        self.client = OpenAI()
+
+    @llm_expect(dataset="tests.jsonl")
+    def generate(self, prompt: str):
+        # 'self' is available here!
+        return self.client.generate(prompt)
+
+# Usage
+generator = MyClass()
+result = generator.generate("Hello") # Normal call
+eval_result = generator.generate.run_eval() # Run evaluation
+```
+
+## Dataset Construction (JSONL)
+Datasets must be in JSONL format. Each line is a single test case.
+
+```json
+{"id": "test_01", "input": "...", "expected": {...}}
+```
+
+### Input Formats
+- **Single Argument**: `{"input": "string value"}` -> `func("string value")`
+- **Multiple Arguments**: `{"input": {"arg1": "val1", "arg2": "val2"}}` -> `func(arg1="val1", arg2="val2")` (Unpacked as kwargs)
+- **List/Tuple**: `{"input": ["a", "b"]}` -> `func(["a", "b"])` (Passed as single list argument)
+
+### Metric Inference
+If `tests` is not specified in the decorator, metrics are inferred from `expected` keys:
+- `reference` -> `accuracy`
+- `contains` -> `accuracy`
+- `regex` -> `accuracy`
+- `schema` -> `schema_fidelity`
+- `safe` -> `safety`
+- `judge` -> `custom_judge`
+- `instruction_adherence` -> `instruction_adherence`
+
+### Expected Output Formats (Metrics)
+- **Reference**: `{"expected": {"reference": "exact match"}}`
+- **Contains**: `{"expected": {"contains": ["keyword1", "keyword2"]}}`
+- **Regex**: `{"expected": {"regex": "^pattern$"}}`
+- **Schema**: `{"expected": {"schema": {...}}}` (JSON Schema)
+- **Safety**: `{"expected": {"safe": true}}`
+- **Judge**: `{"expected": {"judge": {"prompt": "Is this polite?"}}}` (Score: 0.0-1.0)
+
+### Judge Scoring
+- **Scale**: 0.0 to 1.0 float.
+- **Rubric**: 5-point scale (1.0=Perfect, 0.8=Good, 0.6=Partial, 0.4=Poor, 0.0=None).
+- **Safety**: Checks keywords + refusal markers ("I cannot help" = 1.0 Safe).
+
+## Configuration
+
+### Decorator Arguments
+| Argument | Type | Default | Description |
+|----------|------|---------|-------------|
+| `dataset` | `str` | **Required** | Path to JSONL file. |
+| `tests` | `list[str]` | `[]` | Metrics to evaluate. |
+| `thresholds` | `dict` | `{"accuracy": 0.8}` | Pass/fail thresholds. |
+| `judge_provider` | `str` | `None` | `"openai"`, `"anthropic"`, `"bedrock"`. |
+| `parallel` | `bool` | `False` | Run tests in parallel (ThreadPoolExecutor, max 10 workers). |
+| `save_results` | `bool` | `True` | Save detailed results to disk. |
+| `fail_fast` | `bool` | `False` | Stop on first failure. |
+
+### Environment Variables
+Prefix all variables with `LLM_EXPECT_`.
+- `LLM_EXPECT_TESTS`: Comma-separated metrics.
+- `LLM_EXPECT_THRESHOLD`: Global threshold.
+- `LLM_EXPECT_OPENAI_API_KEY`: For judge provider.
+
+## CLI Usage
+- `llm-expect runs list`: List recent evaluation runs.
+- `llm-expect runs show <run_dir>`: Show detailed results for a run.
+- **Note**: There is NO `llm-expect run` command. You must execute a Python script that calls `func.run_eval()`.
+
+## Results
+Results are saved in `runs/{date}_{session_id}/{function_name}/`.
+- `report.html`: Visual HTML report.
+- `results.jsonl`: Detailed JSONL results.
+- `summary.json`: Aggregated stats.
+
+## Common Pitfalls
+1.  **Do not mock the LLM** inside the decorated function. LLM Expect is for integration testing.
+2.  **Do not use `pytest` decorators** on the same function.
+3.  **JSONL paths**: Ensure the dataset path is relative to where the script is run.
