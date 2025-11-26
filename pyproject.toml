@@ -84,7 +84,8 @@ include = [
     "/examples", 
     "/README.md",
     "/LICENSE",
-    "/CHANGELOG.md"
+    "/CHANGELOG.md",
+    "/llm.txt"
 ]
 exclude = [
     "/.git*",
