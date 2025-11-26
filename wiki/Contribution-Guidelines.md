@@ -1,6 +1,6 @@
 # Contribution Guidelines
 
-We are thrilled that you are interested in contributing to Vald8! We are building a community of developers who care about **simple, transparent, and rigorous AI evaluation**.
+We are thrilled that you are interested in contributing to LLM Expect! We are building a community of developers who care about **simple, transparent, and rigorous AI evaluation**.
 
 ## Our Values
 

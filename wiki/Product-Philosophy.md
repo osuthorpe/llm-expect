@@ -1,14 +1,14 @@
-# Product Philosophy: The Vald8 Way
+# Product Philosophy: The LLM Expect Way
 
-Vald8 is not just a library; it's an opinionated approach to AI engineering. Our product philosophy is built on three pillars: **Minimalism**, **Developer Experience (DX)**, and **Transparency**.
+LLM Expect is not just a library; it's an opinionated approach to AI engineering. Our product philosophy is built on three pillars: **Minimalism**, **Developer Experience (DX)**, and **Transparency**.
 
 ## 1. Minimalism: Less is More
 
-In a world of bloated frameworks and complex orchestration tools, Vald8 chooses to be small.
+In a world of bloated frameworks and complex orchestration tools, LLM Expect chooses to be small.
 
-*   **No New Infrastructure**: We don't ask you to spin up a Docker container, a database, or a separate evaluation server. Vald8 runs where your code runs.
+*   **No New Infrastructure**: We don't ask you to spin up a Docker container, a database, or a separate evaluation server. LLM Expect runs where your code runs.
 *   **No "Platform" Lock-in**: We are not a SaaS platform trying to capture your data. We are a library that empowers your existing workflow.
-*   **Single Responsibility**: Vald8 does one thing well: it validates LLM outputs against expectations. It doesn't try to be a prompt playground, a vector database, or a fine-tuning framework.
+*   **Single Responsibility**: LLM Expect does one thing well: it validates LLM outputs against expectations. It doesn't try to be a prompt playground, a vector database, or a fine-tuning framework.
 
 > "Perfection is achieved, not when there is nothing more to add, but when there is nothing left to take away." - Antoine de Saint-Exupéry
 
@@ -31,20 +31,20 @@ Trust is the currency of AI. If you don't understand why a model failed, you can
 
 ## 4. Built on Human-Centered AI Principles
 
-Vald8 is the practical implementation of the [10 Principles of Human-Centered AI Design](https://www.alexthorpe.com/principles). It provides the tooling necessary to turn these abstract principles into concrete engineering practices.
+LLM Expect is the practical implementation of the [10 Principles of Human-Centered AI Design](https://www.alexthorpe.com/principles). It provides the tooling necessary to turn these abstract principles into concrete engineering practices.
 
-*   **Principle 2 (Reduce Surprise) & 4 (Constrain Systems)**: Vald8's core purpose is to define boundaries. By setting explicit expectations (e.g., `contains`, `regex`, `safety`), you ensure your system behaves predictably and stays within defined limits.
-*   **Principle 5 (Evaluate Continuously)**: Behavior shifts over time. Vald8 enables "evaluation as code," making continuous regression testing a natural part of your daily workflow, not just a pre-launch checklist.
-*   **Principle 7 (Make Failures Observable)**: Vald8's detailed JSONL logs make failures explicit, discoverable, and debuggable. We treat bias and refusals as system failures that must be surfaced, never silenced.
-*   **Principle 10 (Document Decisions)**: A Vald8 dataset is more than just a test file; it is documentation. It records exactly what the system is expected to do, serving as a living record of your product decisions.
+*   **Principle 2 (Reduce Surprise) & 4 (Constrain Systems)**: LLM Expect's core purpose is to define boundaries. By setting explicit expectations (e.g., `contains`, `regex`, `safety`), you ensure your system behaves predictably and stays within defined limits.
+*   **Principle 5 (Evaluate Continuously)**: Behavior shifts over time. LLM Expect enables "evaluation as code," making continuous regression testing a natural part of your daily workflow, not just a pre-launch checklist.
+*   **Principle 7 (Make Failures Observable)**: LLM Expect's detailed JSONL logs make failures explicit, discoverable, and debuggable. We treat bias and refusals as system failures that must be surfaced, never silenced.
+*   **Principle 10 (Document Decisions)**: A LLM Expect dataset is more than just a test file; it is documentation. It records exactly what the system is expected to do, serving as a living record of your product decisions.
 
-## Who is Vald8 For?
+## Who is LLM Expect For?
 
 *   **The Pragmatic Engineer**: Who wants to ship reliable AI features without drowning in complexity.
 *   **The Product Leader**: Who needs to know "is this actually better?" before approving a release.
 *   **The AI Researcher**: Who needs a lightweight, reproducible way to benchmark experiments.
 
-## Who is Vald8 NOT For?
+## Who is LLM Expect NOT For?
 
-*   Teams looking for a heavy, all-in-one enterprise AI platform (though Vald8 can integrate with them).
+*   Teams looking for a heavy, all-in-one enterprise AI platform (though LLM Expect can integrate with them).
 *   Users who prefer GUI-based "no-code" evaluation tools over code-centric workflows.

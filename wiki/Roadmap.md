@@ -1,6 +1,6 @@
 # Roadmap
 
-This roadmap outlines the strategic direction for Vald8. It is a living document and will evolve based on community feedback and the changing landscape of AI.
+This roadmap outlines the strategic direction for LLM Expect. It is a living document and will evolve based on community feedback and the changing landscape of AI.
 
 ## Short Term (v0.2.0 - v0.3.0)
 *Focus: Deepening the core validation capabilities.*
@@ -30,7 +30,7 @@ This roadmap outlines the strategic direction for Vald8. It is a living document
 ## Strategic Themes
 
 1.  **"Evaluation as Code"**: We will continue to double down on code-centric workflows.
-2.  **Model Agnostic**: Vald8 will never favor one model provider over another.
+2.  **Model Agnostic**: LLM Expect will never favor one model provider over another.
 3.  **Community Driven**: We prioritize features requested by open-source contributors.
 
 ---

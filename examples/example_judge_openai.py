@@ -10,7 +10,7 @@ api_key = os.getenv("OPENAI_API_KEY")
 # JudgeProvider uses its own HTTP client internally.
 client = OpenAI(api_key=api_key) if api_key else None
 
-@vald8(
+@llm_expect(
     dataset="examples/datasets/judge.jsonl",
     tests=["custom_judge"],
     judge_provider="openai",

@@ -219,7 +219,7 @@ LLM Expect supports configuration through decorator parameters and environment v
     sample_size=10,                        # Optional: Number of examples to sample
     shuffle=True,                          # Optional: Shuffle before sampling (default: False)
     cache=True,                            # Optional: Cache results (default: True)
-    cache_dir=".vald8_cache",              # Optional: Cache directory
+    cache_dir=".llm_expect_cache",              # Optional: Cache directory
     results_dir="runs",                    # Optional: Results directory
     fail_fast=False,                       # Optional: Stop on first failure (default: False)
     timeout=60,                            # Optional: Function timeout in seconds
@@ -230,21 +230,21 @@ LLM Expect supports configuration through decorator parameters and environment v
 
 ### Environment Variables
 
-All configuration parameters can be set via environment variables with the `VALD8_` prefix:
+All configuration parameters can be set via environment variables with the `LLM_EXPECT_` prefix:
 
 | Variable | Type | Description | Default |
 |----------|------|-------------|---------|
-| `VALD8_TESTS` | List | Comma-separated metrics (e.g., `"accuracy,safety"`) | `[]` |
-| `VALD8_THRESHOLD` | Float | Global threshold for all metrics | `0.8` |
-| `VALD8_THRESHOLD_ACCURACY` | Float | Threshold for accuracy metric | `0.8` |
-| `VALD8_THRESHOLD_SAFETY` | Float | Threshold for safety metric | `1.0` |
-| `VALD8_SAMPLE_SIZE` | Int | Number of examples to sample | All |
-| `VALD8_SHUFFLE` | Bool | Shuffle examples (`true`/`false`) | `false` |
-| `VALD8_CACHE` | Bool | Enable caching | `true` |
-| `VALD8_CACHE_DIR` | String | Cache directory path | `.vald8_cache` |
-| `VALD8_RESULTS_DIR` | String | Results directory path | `runs` |
-| `VALD8_FAIL_FAST` | Bool | Stop on first failure | `false` |
-| `VALD8_TIMEOUT` | Int | Function timeout (seconds) | `60` |
+| `LLM_EXPECT_TESTS` | List | Comma-separated metrics (e.g., `"accuracy,safety"`) | `[]` |
+| `LLM_EXPECT_THRESHOLD` | Float | Global threshold for all metrics | `0.8` |
+| `LLM_EXPECT_THRESHOLD_ACCURACY` | Float | Threshold for accuracy metric | `0.8` |
+| `LLM_EXPECT_THRESHOLD_SAFETY` | Float | Threshold for safety metric | `1.0` |
+| `LLM_EXPECT_SAMPLE_SIZE` | Int | Number of examples to sample | All |
+| `LLM_EXPECT_SHUFFLE` | Bool | Shuffle examples (`true`/`false`) | `false` |
+| `LLM_EXPECT_CACHE` | Bool | Enable caching | `true` |
+| `LLM_EXPECT_CACHE_DIR` | String | Cache directory path | `.llm_expect_cache` |
+| `LLM_EXPECT_RESULTS_DIR` | String | Results directory path | `runs` |
+| `LLM_EXPECT_FAIL_FAST` | Bool | Stop on first failure | `false` |
+| `LLM_EXPECT_TIMEOUT` | Int | Function timeout (seconds) | `60` |
 
 ### Judge Configuration
 
@@ -252,12 +252,12 @@ For LLM-as-judge metrics (`instruction_adherence`, `safety`, `custom_judge`):
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `VALD8_JUDGE_MODEL` | Judge model name | Provider-specific |
-| `VALD8_JUDGE_API_KEY` | Judge API key | From provider env var |
-| `VALD8_JUDGE_BASE_URL` | Custom API base URL | Provider default |
-| `VALD8_JUDGE_TIMEOUT` | Judge request timeout | `30` |
-| `VALD8_JUDGE_MAX_RETRIES` | Max retry attempts | `3` |
-| `VALD8_JUDGE_TEMPERATURE` | Judge temperature | `0.0` |
+| `LLM_EXPECT_JUDGE_MODEL` | Judge model name | Provider-specific |
+| `LLM_EXPECT_JUDGE_API_KEY` | Judge API key | From provider env var |
+| `LLM_EXPECT_JUDGE_BASE_URL` | Custom API base URL | Provider default |
+| `LLM_EXPECT_JUDGE_TIMEOUT` | Judge request timeout | `30` |
+| `LLM_EXPECT_JUDGE_MAX_RETRIES` | Max retry attempts | `3` |
+| `LLM_EXPECT_JUDGE_TEMPERATURE` | Judge temperature | `0.0` |
 
 **Provider API Keys:**
 - OpenAI: `OPENAI_API_KEY`
@@ -370,27 +370,27 @@ runs/
 | `sample_size` | `int` | `None` (All) | Number of examples to sample from the dataset. |
 | `shuffle` | `bool` | `False` | Whether to shuffle examples before sampling. |
 | `cache` | `bool` | `True` | Enable caching of results to avoid re-running passed tests. |
-| `cache_dir` | `str` | `".vald8_cache"` | Directory for cache files. |
+| `cache_dir` | `str` | `".llm_expect_cache"` | Directory for cache files. |
 | `results_dir` | `str` | `"runs"` | Directory to save detailed evaluation results. |
 | `fail_fast` | `bool` | `False` | Stop evaluation immediately on the first failure. |
 | `timeout` | `int` | `60` | Timeout in seconds for the decorated function execution. |
 
 ## Environment Variables
 
-All configuration can be overridden by environment variables with the `VALD8_` prefix.
+All configuration can be overridden by environment variables with the `LLM_EXPECT_` prefix.
 
 | Variable | Type | Description |
 |----------|------|-------------|
-| `VALD8_TESTS` | List | Comma-separated metrics (e.g., `"accuracy,safety"`). |
-| `VALD8_THRESHOLD` | Float | Global threshold applied to all metrics. |
-| `VALD8_THRESHOLD_{METRIC}` | Float | Specific threshold for a metric (e.g., `VALD8_THRESHOLD_SAFETY`). |
-| `VALD8_SAMPLE_SIZE` | Int | Number of examples to sample. |
-| `VALD8_SHUFFLE` | Bool | Shuffle examples (`true`/`false`). |
-| `VALD8_CACHE` | Bool | Enable/disable caching. |
-| `VALD8_CACHE_DIR` | Str | Cache directory path. |
-| `VALD8_RESULTS_DIR` | Str | Results directory path. |
-| `VALD8_FAIL_FAST` | Bool | Stop on first failure. |
-| `VALD8_TIMEOUT` | Int | Function timeout in seconds. |
+| `LLM_EXPECT_TESTS` | List | Comma-separated metrics (e.g., `"accuracy,safety"`). |
+| `LLM_EXPECT_THRESHOLD` | Float | Global threshold applied to all metrics. |
+| `LLM_EXPECT_THRESHOLD_{METRIC}` | Float | Specific threshold for a metric (e.g., `LLM_EXPECT_THRESHOLD_SAFETY`). |
+| `LLM_EXPECT_SAMPLE_SIZE` | Int | Number of examples to sample. |
+| `LLM_EXPECT_SHUFFLE` | Bool | Shuffle examples (`true`/`false`). |
+| `LLM_EXPECT_CACHE` | Bool | Enable/disable caching. |
+| `LLM_EXPECT_CACHE_DIR` | Str | Cache directory path. |
+| `LLM_EXPECT_RESULTS_DIR` | Str | Results directory path. |
+| `LLM_EXPECT_FAIL_FAST` | Bool | Stop on first failure. |
+| `LLM_EXPECT_TIMEOUT` | Int | Function timeout in seconds. |
 
 ## Judge Configuration
 
@@ -398,12 +398,12 @@ For metrics that require an LLM judge (`instruction_adherence`, `safety`, `custo
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `VALD8_JUDGE_MODEL` | Judge model name | Provider default (e.g., GPT-4) |
-| `VALD8_JUDGE_API_KEY` | Judge API key | `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` |
-| `VALD8_JUDGE_BASE_URL` | Custom API base URL | Provider default |
-| `VALD8_JUDGE_TIMEOUT` | Judge request timeout | `30` |
-| `VALD8_JUDGE_MAX_RETRIES` | Max retry attempts | `3` |
-| `VALD8_JUDGE_TEMPERATURE` | Judge temperature | `0.0` |
+| `LLM_EXPECT_JUDGE_MODEL` | Judge model name | Provider default (e.g., GPT-4) |
+| `LLM_EXPECT_JUDGE_API_KEY` | Judge API key | `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` |
+| `LLM_EXPECT_JUDGE_BASE_URL` | Custom API base URL | Provider default |
+| `LLM_EXPECT_JUDGE_TIMEOUT` | Judge request timeout | `30` |
+| `LLM_EXPECT_JUDGE_MAX_RETRIES` | Max retry attempts | `3` |
+| `LLM_EXPECT_JUDGE_TEMPERATURE` | Judge temperature | `0.0` |
 ---
 
 ## 📁 Results Folder Structure

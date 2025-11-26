@@ -1,5 +1,5 @@
 """
-Configuration management for Vald8.
+Configuration management for LLM Expect.
 
 Handles loading configuration from various sources (environment, files, parameters)
 with proper validation and defaults.
@@ -14,10 +14,10 @@ from .models import JudgeConfig, LLMExpectConfig
 
 
 class ConfigManager:
-    """Manages Vald8 configuration from multiple sources."""
+    """Manages LLM Expect configuration from multiple sources."""
     
     def __init__(self):
-        self.env_prefix = "VALD8_"
+        self.env_prefix = "LLM_EXPECT_"
     
     def create_config(
         self,
@@ -36,7 +36,7 @@ class ConfigManager:
         **kwargs
     ) -> LLMExpectConfig:
         """
-        Create a Vald8Config from parameters with environment variable fallbacks.
+        Create a LLMExpectConfig from parameters with environment variable fallbacks.
         
         Args:
             dataset: Path to dataset file
@@ -54,7 +54,7 @@ class ConfigManager:
             **kwargs: Additional configuration parameters
             
         Returns:
-            Validated Vald8Config object
+            Validated LLMExpectConfig object
             
         Raises:
             ConfigurationError: If configuration is invalid
@@ -69,7 +69,7 @@ class ConfigManager:
                 "sample_size": sample_size or self._get_env_int("SAMPLE_SIZE"),
                 "shuffle": shuffle or self._get_env_bool("SHUFFLE", False),
                 "cache": cache and self._get_env_bool("CACHE", True),  # Allow disabling cache
-                "cache_dir": cache_dir or self._get_env_str("CACHE_DIR") or ".vald8_cache",
+                "cache_dir": cache_dir or self._get_env_str("CACHE_DIR") or ".llm_expect_cache",
                 "results_dir": results_dir or self._get_env_str("RESULTS_DIR") or "runs",
                 "fail_fast": fail_fast or self._get_env_bool("FAIL_FAST", False),
                 "timeout": timeout or self._get_env_int("TIMEOUT") or 60,
@@ -267,7 +267,7 @@ class ConfigManager:
             file_path: Path to configuration file
             
         Returns:
-            Validated Vald8Config object
+            Validated LLMExpectConfig object
             
         Raises:
             ConfigurationError: If file loading fails

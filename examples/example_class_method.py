@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Example: Using Vald8 with Class Methods
+Example: Using LLM Expect with Class Methods
 
-This example demonstrates how to use the @vald8 decorator with class methods.
-Vald8 supports decorating instance methods directly, handling `self` binding automatically.
+This example demonstrates how to use the @llm_expect decorator with class methods.
+LLM Expect supports decorating instance methods directly, handling `self` binding automatically.
 """
 
 import os
@@ -93,7 +93,7 @@ if __name__ == "__main__":
         print("   💡 Set OPENAI_API_KEY in your .env file to run this example.")
     else:
         # Run the evaluation
-        print("\n📊 Running Vald8 evaluation...")
+        print("\n📊 Running LLM Expect evaluation...")
         
         # Create an instance
         generator = ReleaseNoteGenerator()

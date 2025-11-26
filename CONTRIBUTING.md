@@ -1,6 +1,6 @@
-# Contributing to Vald8
+# Contributing to LLM Expect
 
-Thank you for your interest in contributing to Vald8! This guide will help you get started.
+Thank you for your interest in contributing to LLM Expect! This guide will help you get started.
 
 ## 🚀 Quick Start
 
@@ -8,8 +8,8 @@ Thank you for your interest in contributing to Vald8! This guide will help you g
 
 1. **Clone and setup**:
 ```bash
-git clone https://github.com/osuthorpe/vald8
-cd vald8
+git clone https://github.com/osuthorpe/llm-expect
+cd llm-expect
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
@@ -28,23 +28,23 @@ pytest tests/ -v
 
 ```bash
 # Format code
-black vald8/ tests/
+black llm_expect/ tests/
 
 # Lint code
-ruff check vald8/ tests/
+ruff check llm_expect/ tests/
 
 # Type checking
-mypy vald8/
+mypy llm_expect/
 
 # Run all quality checks
-black vald8/ tests/ && ruff check vald8/ tests/ && mypy vald8/ && pytest
+black llm_expect/ tests/ && ruff check llm_expect/ tests/ && mypy llm_expect/ && pytest
 ```
 
 ## 📋 Contribution Process
 
 ### 1. Find or Create an Issue
 
-- Check existing [issues](https://github.com/osuthorpe/vald8/issues)
+- Check existing [issues](https://github.com/osuthorpe/llm-expect/issues)
 - For bugs: include reproduction steps and error messages
 - For features: explain the use case and expected behavior
 
@@ -52,8 +52,8 @@ black vald8/ tests/ && ruff check vald8/ tests/ && mypy vald8/ && pytest
 
 ```bash
 # Fork on GitHub, then clone your fork
-git clone https://github.com/your-username/vald8
-cd vald8
+git clone https://github.com/your-username/llm-expect
+cd llm-expect
 
 # Create feature branch
 git checkout -b feature/your-feature-name
@@ -179,9 +179,9 @@ Fixes #67"
 pytest -v
 
 # Ensure code quality
-black vald8/ tests/
-ruff check vald8/ tests/  
-mypy vald8/
+black llm_expect/ tests/
+ruff check llm_expect/ tests/  
+mypy llm_expect/
 
 # Update documentation if needed
 # Add entry to CHANGELOG.md if significant change
@@ -254,7 +254,7 @@ Fixes #issue-number
 
 **Code:**
 ```python
-@vald8(dataset="test.jsonl", tests=["accuracy"])
+@llm_expect(dataset="test.jsonl", tests=["accuracy"])
 def my_func(input_data):
     return "response"
 ```
@@ -295,8 +295,8 @@ Contributors will be:
 
 ## ❓ Questions?
 
-- **General questions**: Open a [Discussion](https://github.com/osuthorpe/vald8/discussions)
-- **Bug reports**: Create an [Issue](https://github.com/osuthorpe/vald8/issues)
+- **General questions**: Open a [Discussion](https://github.com/osuthorpe/llm-expect/discussions)
+- **Bug reports**: Create an [Issue](https://github.com/osuthorpe/llm-expect/issues)
 - **Security concerns**: See [SECURITY.md](SECURITY.md)
 
 ---

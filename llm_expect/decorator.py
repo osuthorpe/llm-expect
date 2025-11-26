@@ -281,7 +281,7 @@ class LLMExpectFunction:
         # Create a bound method
         bound_func = self.func.__get__(obj, objtype)
         
-        # Return a new Vald8Function wrapping the bound method, sharing the config
+        # Return a new LLMExpectFunction wrapping the bound method, sharing the config
         # We need to ensure the new wrapper shares the same config object
         wrapper = LLMExpectFunction(bound_func, self.config)
         return wrapper

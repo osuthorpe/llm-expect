@@ -9,7 +9,7 @@ load_dotenv()
 # Initialize OpenAI client
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-@vald8(dataset="examples/datasets/summary.jsonl")
+@llm_expect(dataset="examples/datasets/summary.jsonl")
 def summarize_correct(prompt: str) -> str:
     """Correct implementation: Summarizes the text with key entities."""
     try:
@@ -24,7 +24,7 @@ def summarize_correct(prompt: str) -> str:
     except Exception as e:
         return f"Error: {str(e)}"
 
-@vald8(dataset="examples/datasets/summary.jsonl")
+@llm_expect(dataset="examples/datasets/summary.jsonl")
 def summarize_incorrect(prompt: str) -> str:
     """Incorrect implementation: Returns irrelevant summary that misses key entities."""
     try:

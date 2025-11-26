@@ -2,7 +2,7 @@
 
 ## Overview
 
-Vald8 uses a comprehensive testing strategy to ensure reliability across different LLM evaluation scenarios.
+LLM Expect uses a comprehensive testing strategy to ensure reliability across different LLM evaluation scenarios.
 
 ## Test Categories
 
@@ -30,7 +30,7 @@ pytest tests/integration/ -v
 ```
 
 **Coverage areas:**
-- **Decorator integration** (`test_decorator.py`) - @vald8 with real datasets
+- **Decorator integration** (`test_decorator.py`) - @llm_expect with real datasets
 - **Runner workflow** (`test_runner.py`) - End-to-end evaluation execution
 - **Judge integration** (`test_judge_integration.py`) - Real API calls with mocking
 - **Cache functionality** (`test_cache.py`) - Result caching and retrieval
@@ -121,7 +121,7 @@ def temp_dataset(tmp_path):
 @pytest.fixture
 def mock_judge():
     """Mock judge provider for testing."""
-    with patch('vald8.judges.openai_judge.OpenAIJudge') as mock:
+    with patch('llm_expect.judges.openai_judge.OpenAIJudge') as mock:
         mock.return_value.grade_instruction.return_value = {
             "score": 1.0, "passed": True, "reasoning": "Perfect"
         }
@@ -133,7 +133,7 @@ def mock_judge():
 ### Minimum Coverage Thresholds
 
 ```bash
-pytest --cov=vald8 --cov-report=html --cov-fail-under=90
+pytest --cov=llm_expect --cov-report=html --cov-fail-under=90
 ```
 
 - **Overall coverage**: ≥90%
@@ -165,7 +165,7 @@ pytest tests/integration/ -v --real-apis
 pytest -v
 
 # With coverage
-pytest --cov=vald8 --cov-report=term-missing
+pytest --cov=llm_expect --cov-report=term-missing
 ```
 
 ### CI/CD Testing
@@ -174,7 +174,7 @@ pytest --cov=vald8 --cov-report=term-missing
 pytest tests/unit/ tests/integration/ -v --tb=short
 
 # Full test suite for releases
-pytest -v --cov=vald8 --cov-report=xml --junit-xml=results.xml
+pytest -v --cov=llm_expect --cov-report=xml --junit-xml=results.xml
 
 # Performance regression tests
 pytest tests/performance/ -v --benchmark-only

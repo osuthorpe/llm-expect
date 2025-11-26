@@ -1,10 +1,10 @@
 # Architecture Deep Dive
 
-This document explains the internal architecture of Vald8, the design decisions behind it, and how the components interact.
+This document explains the internal architecture of LLM Expect, the design decisions behind it, and how the components interact.
 
 ## Core Components
 
-Vald8 is composed of three main layers:
+LLM Expect is composed of three main layers:
 1.  **The Decorator Layer** (`decorator.py`): The entry point for the user.
 2.  **The Orchestration Layer** (`EvaluationRunner`): Manages the flow of data.
 3.  **The Evaluation Layer** (`metrics.py`, `judges.py`): Performs the actual validation.
@@ -14,7 +14,7 @@ Vald8 is composed of three main layers:
 The `@vald8` decorator is a wrapper that intercepts calls to the user's function.
 
 *   **Why Decorators?** We chose decorators because they are non-intrusive. They allow users to "tag" functions for evaluation without modifying the function's internal logic.
-*   **Mechanism**: When the decorated function is called, Vald8 checks if it's being run in "evaluation mode" (triggered by `function.eval()`). If so, it bypasses normal execution and hands control to the `EvaluationRunner`.
+*   **Mechanism**: When the decorated function is called, LLM Expect checks if it's being run in "evaluation mode" (triggered by `function.eval()`). If so, it bypasses normal execution and hands control to the `EvaluationRunner`.
 
 ### 2. The Orchestration Layer (`EvaluationRunner`)
 
@@ -70,7 +70,7 @@ We use JSON Lines (JSONL) for datasets and results because:
 3.  **Unix-friendly**: Works well with `grep`, `jq`, and other command-line tools.
 
 ### Why No Database?
-Vald8 is designed to be stateless. Introducing a database (SQLite, Postgres) adds:
+LLM Expect is designed to be stateless. Introducing a database (SQLite, Postgres) adds:
 *   **Migration complexity**: Schema changes become painful.
 *   **Setup friction**: Users have to configure connection strings.
 *   **Concurrency issues**: Locking and writing from multiple processes.

@@ -1,6 +1,6 @@
-# Welcome to Vald8
+# Welcome to LLM Expect
 
-**Vald8** (validate) is a minimalist, developer-first SDK for testing LLM-powered Python functions using structured JSONL datasets.
+**LLM Expect** (validate) is a minimalist, developer-first SDK for testing LLM-powered Python functions using structured JSONL datasets.
 
 ## Vision: Democratizing AI Evaluation
 
@@ -9,9 +9,9 @@ In the rapidly evolving landscape of Generative AI, evaluation is the new unit t
 *   **Too Opaque**: "Black box" metrics that are hard to trust or debug.
 *   **Too Rigid**: Forcing specific workflows that don't fit into existing CI/CD pipelines.
 
-**Vald8 envisions a world where evaluating an LLM is as simple, transparent, and routine as running `pytest`.** We believe that rigorous, continuous evaluation should be accessible to every developer, not just ML engineers with specialized infrastructure.
+**LLM Expect envisions a world where evaluating an LLM is as simple, transparent, and routine as running `pytest`.** We believe that rigorous, continuous evaluation should be accessible to every developer, not just ML engineers with specialized infrastructure.
 
-> Vald8 is built to operationalize the [10 Principles of Human-Centered AI Design](https://www.alexthorpe.com/principles), ensuring your AI systems are explainable, predictable, and safe.
+> LLM Expect is built to operationalize the [10 Principles of Human-Centered AI Design](https://www.alexthorpe.com/principles), ensuring your AI systems are explainable, predictable, and safe.
 
 ## Mission: The "Zero-Friction" Standard
 
@@ -24,19 +24,19 @@ We achieve this by adhering to three core principles:
 
 ## High-Level Architecture
 
-Vald8 sits directly in your codebase, wrapping your LLM functions to provide instant feedback.
+LLM Expect sits directly in your codebase, wrapping your LLM functions to provide instant feedback.
 
 ```mermaid
 graph TD
     subgraph "Your Codebase"
-        F[LLM Function] -->|Decorated with @vald8| D[Vald8 SDK]
+        F[LLM Function] -->|Decorated with @vald8| D[LLM Expect SDK]
     end
     
     subgraph "Inputs"
         J[JSONL Dataset] -->|Feeds| D
     end
     
-    subgraph "Vald8 Engine"
+    subgraph "LLM Expect Engine"
         D -->|Orchestrates| R[Runner]
         R -->|Calls| M[Metric Evaluator]
         M -->|Uses| P[Judge Providers]
@@ -51,7 +51,7 @@ graph TD
 
 ## Documentation
 
-*   [**Product Philosophy**](Product-Philosophy.md): Understanding "The Vald8 Way".
+*   [**Product Philosophy**](Product-Philosophy.md): Understanding "The LLM Expect Way".
 *   [**Architecture Deep Dive**](Architecture-Deep-Dive.md): How it works under the hood.
 *   [**Roadmap**](Roadmap.md): Where we are going.
 *   [**Use Cases**](Use-Cases.md): Real-world examples.

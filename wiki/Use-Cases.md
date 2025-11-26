@@ -1,6 +1,6 @@
 # Use Cases
 
-Vald8 is flexible enough to handle a wide variety of LLM evaluation scenarios. Here are three common patterns.
+LLM Expect is flexible enough to handle a wide variety of LLM evaluation scenarios. Here are three common patterns.
 
 ## 1. RAG (Retrieval-Augmented Generation) Evaluation
 
@@ -10,7 +10,7 @@ Vald8 is flexible enough to handle a wide variety of LLM evaluation scenarios. H
 *   **Dataset**: `questions.jsonl` containing `{"input": "...", "expected": {"judge": {"prompt": "Is the answer supported by the context?"}}}`.
 *   **Function**: Your RAG pipeline (retrieve -> generate).
 
-**Vald8 Solution**:
+**LLM Expect Solution**:
 Use a **Custom Judge** to evaluate "Faithfulness" and "Answer Relevance".
 
 ```python
@@ -32,7 +32,7 @@ def rag_pipeline(query):
 *   **Dataset**: `safety.jsonl` containing harmful prompts.
 *   **Expectation**: `{"safety": true}`.
 
-**Vald8 Solution**:
+**LLM Expect Solution**:
 Use the built-in **Safety Metric**. It checks if the model output indicates a refusal (e.g., "I cannot answer that").
 
 ```python
@@ -52,7 +52,7 @@ def safe_chatbot(user_input):
 *   **Dataset**: `emails.jsonl`.
 *   **Expectation**: `{"contains": ["order_id", "customer_name"]}` or `{"regex": "Order ID: \\d+"}`.
 
-**Vald8 Solution**:
+**LLM Expect Solution**:
 Use **Regex** or **Contains** metrics for deterministic validation.
 
 ```python
@@ -70,10 +70,10 @@ def extract_order_info(email_body):
 **The Problem**: You are changing your prompt or switching models (e.g., GPT-4 to GPT-3.5) and want to make sure quality doesn't drop.
 
 **The Setup**:
-1.  Run Vald8 on your "Golden Dataset" with the old model.
+1.  Run LLM Expect on your "Golden Dataset" with the old model.
 2.  Switch the model.
-3.  Run Vald8 again.
+3.  Run LLM Expect again.
 4.  Compare the pass rates.
 
-**Vald8 Solution**:
-Vald8's session-based logging makes this easy. You can simply look at the pass rates in the terminal or inspect the `results.jsonl` files to see exactly which cases regressed.
+**LLM Expect Solution**:
+LLM Expect's session-based logging makes this easy. You can simply look at the pass rates in the terminal or inspect the `results.jsonl` files to see exactly which cases regressed.

@@ -1,16 +1,9 @@
-# LLM Expect SDK Context for LLMs
+# LLM Expect - Quick Reference for AI Assistants
 
-## Core Identity
-LLM Expect is a minimalist Python SDK for evaluating LLM functions using a decorator-based approach and JSONL datasets. It is designed to be as simple as `pytest`.
+## What is LLM Expect?
+LLM Expect is a pytest-like evaluation framework for LLM functions. It uses JSONL datasets to validate outputs against expectations.
 
-## Installation
-`pip install llm-expect`
-
-## Key Patterns
-
-### 1. The Decorator Pattern
-LLM Expect works by decorating a **standalone function** or **instance method**.
-
+## Core Pattern
 ```python
 from llm_expect import llm_expect
 
@@ -71,14 +64,14 @@ Datasets must be in JSONL format. Each line is a single test case.
 | `save_results` | `bool` | `True` | Save detailed results to disk. |
 
 ### Environment Variables
-Prefix all variables with `VALD8_`.
-- `VALD8_TESTS`: Comma-separated metrics.
-- `VALD8_THRESHOLD`: Global threshold.
-- `VALD8_OPENAI_API_KEY`: For judge provider.
+Prefix all variables with `LLM_EXPECT_`.
+- `LLM_EXPECT_TESTS`: Comma-separated metrics.
+- `LLM_EXPECT_THRESHOLD`: Global threshold.
+- `LLM_EXPECT_OPENAI_API_KEY`: For judge provider.
 
 ## CLI Usage
-- `vald8 runs list`: List recent evaluation runs.
-- `vald8 runs show <run_dir>`: Show detailed results for a run.
+- `llm-expect runs list`: List recent evaluation runs.
+- `llm-expect runs show <run_dir>`: Show detailed results for a run.
 
 ## Results
 Results are saved in `runs/{date}_{session_id}/{function_name}/`.

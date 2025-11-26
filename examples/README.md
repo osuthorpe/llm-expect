@@ -1,6 +1,6 @@
-# Vald8 Examples
+# LLM Expect Examples
 
-This directory contains examples demonstrating various features and use cases of the Vald8 evaluation framework.
+This directory contains examples demonstrating various features and use cases of the LLM Expect evaluation framework.
 
 ## Quick Start
 
@@ -29,11 +29,11 @@ python examples/example_judge_openai.py
 
 ### Advanced Examples
 
-- **`example_class_method.py`** - Using `@vald8` with class methods ⭐
+- **`example_class_method.py`** - Using `@llm_expect` with class methods ⭐
 
-## Using Vald8 with Class Methods
+## Using LLM Expect with Class Methods
 
-The `@vald8` decorator is designed to work with **standalone functions**, not instance methods. If you have a class with methods you want to evaluate, you need to create a module-level wrapper function.
+The `@llm_expect` decorator is designed to work with **standalone functions**, not instance methods. If you have a class with methods you want to evaluate, you need to create a module-level wrapper function.
 
 ### ❌ This Won't Work
 
@@ -67,7 +67,7 @@ def _get_instance():
 # Decorate the wrapper function
 @vald8(dataset="data.jsonl")
 def my_method(input: str) -> str:
-    """Wrapper for Vald8 evaluation."""
+    """Wrapper for LLM Expect evaluation."""
     instance = _get_instance()
     return instance.my_method(input)
 ```

@@ -133,8 +133,8 @@ Uses an LLM to grade the response based on a prompt.
 ### Environment Variables
 - `OPENAI_API_KEY` (for OpenAI judge)
 - `ANTHROPIC_API_KEY` (for Anthropic judge)
-- `VALD8_TESTS` (default metrics)
-- `VALD8_THRESHOLD` (global threshold)
+- `LLM_EXPECT_TESTS` (default metrics)
+- `LLM_EXPECT_THRESHOLD` (global threshold)
 
 ### 🧠 Common Pitfalls to Avoid
 

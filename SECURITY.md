@@ -12,7 +12,7 @@
 
 Instead, please report them privately:
 
-1. **Email**: security@vald8.dev (if available)
+1. **Email**: security@llm-expect.dev (if available)
 2. **GitHub Security Advisories**: Use the "Report a vulnerability" button on our GitHub repository
 3. **Response Time**: We aim to respond within 48 hours
 
@@ -30,7 +30,7 @@ Instead, please report them privately:
 **❌ Never do this:**
 ```python
 # Don't hardcode API keys
-@vald8(judge_provider="openai", api_key="sk-...")
+@llm_expect(judge_provider="openai", api_key="sk-...")
 def my_function():
     pass
 

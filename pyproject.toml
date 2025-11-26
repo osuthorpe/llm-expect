@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "llm-expect"
 version = "0.1.6"
-description = "Vald8 is a minimalist, developer-first SDK for testing LLM-powered Python functions using structured JSONL datasets."
+description = "LLM Expect is a minimalist, developer-first SDK for testing LLM-powered Python functions using structured JSONL datasets."
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [
