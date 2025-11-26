@@ -28,12 +28,20 @@ LLM Expect is a minimalist, developer-first SDK for testing LLM-powered Python f
 
 **2. Decorate your function (`main.py`)**
 ```python
+import os
+from anthropic import Anthropic
 from llm_expect import llm_expect
 
-# Mock LLM for this example (replace with real API call)
+# Initialize Anthropic client
+client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+
 def call_llm(prompt):
-    if "2+2" in prompt: return "4"
-    return "Hello there!"
+    message = client.messages.create(
+        model="claude-3-haiku-20240307",
+        max_tokens=100,
+        messages=[{"role": "user", "content": prompt}]
+    )
+    return message.content[0].text
 
 @llm_expect(dataset="tests.jsonl")
 def generate(prompt: str):
