@@ -41,6 +41,7 @@ nav:
       - LLM Integration: llm.md
       - Configuration: configuration.md
       - Examples: examples.md
+      - Dataset Cookbook: dataset_examples.md
       - Expectations: expectations.md
       - Metrics: metrics.md
       - Judge Providers: judges.md
