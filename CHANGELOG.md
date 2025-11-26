@@ -8,7 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.6] - 2025-11-25
 
 ### Added
+- **Parallel Execution**: Added `parallel=True` argument to `@vald8` decorator to run tests concurrently using `ThreadPoolExecutor`.
+- **Rich CLI**: Updated CLI to use `rich` library for beautiful, tabular output of evaluation runs.
+- **HTML Reports**: Automatic generation of `report.html` for every evaluation run, featuring charts and detailed test results.
 - Support for decorating instance methods directly with `@vald8`. The decorator now implements the descriptor protocol to correctly bind `self`.
+- New dependencies: `rich` and `jinja2`.
 
 ### Changed
 - Updated documentation to reflect that module-level wrappers are no longer required for class methods.
