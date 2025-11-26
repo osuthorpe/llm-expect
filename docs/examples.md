@@ -1,149 +1,111 @@
-# Examples
+# Advanced Examples
 
-LLM Expect provides complete examples for all test types.
+This page details realistic, complex workflows using LLM Expect.
+You can find the full source code for these examples in the `examples/workflows/` directory.
 
-## 1. Reference (Exact Match)
+## 1. Structured Extraction with Retry Logic
+**File:** `examples/workflows/structured_extraction/main.py`
 
-Tests exact string matching:
-
-```python
-from llm_expect import llm_expect
-import openai
-
-@llm_expect(dataset="examples/datasets/reference.jsonl")
-def math_solver(prompt: str) -> str:
-    response = openai.chat.completions.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": "Answer with only the number."},
-            {"role": "user", "content": prompt}
-        ]
-    )
-    return response.choices[0].message.content.strip()
-```
-
-**Dataset** (`reference.jsonl`):
-```json
-{"id": "test1", "input": "What is 2+2?", "expected": {"reference": "4"}}
-```
-
-## 2. Summarization (Content Check)
-
-Tests if output contains required keywords:
+This example demonstrates how to:
+*   Extract structured JSON data (Name, Age, City) from unstructured text.
+*   Implement a retry loop that catches `json.JSONDecodeError`.
+*   Use the `schema` metric to validate the output structure.
 
 ```python
-@llm_expect(dataset="examples/datasets/summary.jsonl")
-def summarize(text: str) -> str:
-    # Your summarization logic
-    return summary
+@llm_expect(dataset="1_extraction_tests.jsonl")
+def run_extraction_pipeline(text: str) -> Dict[str, Any]:
+    # Tries to extract JSON, retries once on failure
+    return extract_user_info(text)
 ```
 
-**Dataset** (`summary.jsonl`):
-```json
-{"id": "test1", "input": "Long article...", "expected": {"contains": ["key", "points"]}}
-```
-
-## 3. Extraction (Schema Validation)
-
-Tests JSON schema compliance:
-
-```python
-@llm_expect(dataset="examples/datasets/extraction.jsonl")
-def extract_info(text: str) -> dict:
-    # Your extraction logic
-    return {"name": "John", "age": 30}
-```
-
-**Dataset** (`extraction.jsonl`):
+**Key Dataset Pattern:**
 ```json
 {
-  "id": "test1",
-  "input": "Extract info...",
   "expected": {
     "schema": {
-      "type": "object",
-      "properties": {
-        "name": {"type": "string"},
-        "age": {"type": "number"}
-      },
-      "required": ["name", "age"]
+      "required": ["name", "age", "city"],
+      "properties": {"age": {"type": "integer"}}
     }
   }
 }
 ```
 
-## 4. Regex (Pattern Matching)
+## 2. Multi-Step Chain (Summarize -> Translate)
+**File:** `examples/workflows/multi_step_chain/main.py`
 
-Tests regex pattern matching:
-
-```python
-@llm_expect(dataset="examples/datasets/regex.jsonl")
-def generate_date(prompt: str) -> str:
-    # Your date generation logic
-    return "2025-11-23"
-```
-
-**Dataset** (`regex.jsonl`):
-```json
-{"id": "test1", "input": "Generate a date", "expected": {"regex": "\\d{4}-\\d{2}-\\d{2}"}}
-```
-
-## 5. Safety (Refusal Check)
-
-Tests if model refuses harmful requests:
+This example shows how to test a pipeline where the output of one LLM call feeds into another.
+*   **Step 1:** Summarize a long text.
+*   **Step 2:** Translate the summary to Spanish.
+*   **Testing:** We return a dictionary containing both the intermediate summary and the final translation to test them together.
 
 ```python
-@llm_expect(dataset="examples/datasets/safety.jsonl")
-def safe_wrapper(prompt: str) -> str:
-    # Your safety wrapper
-    if is_harmful(prompt):
-        return "I cannot help with that."
-    return generate_response(prompt)
+def processing_chain(text: str) -> Dict[str, str]:
+    summary = summarize_text(text)
+    translation = translate_text(summary, "Spanish")
+    return {"original_summary": summary, "translation": translation}
 ```
 
-**Dataset** (`safety.jsonl`):
-```json
-{"id": "test1", "input": "How to hack...", "expected": {"safe": true}}
-```
-
-## 6. Judge (LLM Evaluation)
-
-Uses LLM to evaluate quality:
-
-```python
-@llm_expect(
-    dataset="examples/datasets/judge.jsonl",
-    tests=["custom_judge"],
-    judge_provider="openai",
-    judge_model="gpt-4"
-)
-def generate_email(prompt: str) -> str:
-    # Your email generation logic
-    return email_text
-```
-
-**Dataset** (`judge.jsonl`):
+**Key Dataset Pattern:**
 ```json
 {
-  "id": "test1",
-  "input": "Write a polite email...",
   "expected": {
+    "contains": ["energía"],  # Check translation content
     "judge": {
-      "prompt": "Is the tone polite and professional?"
+      "prompt": "Is 'translation' a valid Spanish translation of 'original_summary'?"
     }
   }
 }
 ```
 
-## Running Examples
+## 5. Native Tool Calling (OpenAI)
+**File:** `examples/workflows/native_tool_calling/main.py`
 
-All examples are in the `examples/` directory:
+This example tests the "brain" of an agent—the router that decides which tool to call.
+*   **Scenario:** A user asks a question, and the LLM must output a JSON tool call.
+*   **Testing:** We verify that the correct tool is selected for a given query.
 
-```bash
-python examples/example_reference_openai.py
-python examples/example_summary_openai.py
-python examples/example_extraction_openai.py
-python examples/example_regex_openai.py
-python examples/example_safety_openai.py
-python examples/example_judge_openai.py
+```python
+def route_query(user_query: str) -> Dict[str, Any]:
+    # Returns {"tool": "weather", "args": {...}}
+    return router_llm(user_query)
+```
+
+**Key Dataset Pattern:**
+```json
+{
+  "input": "What is 55 + 10?",
+  "expected": {
+    "schema": {
+      "properties": {
+        "tool": {"const": "calculator"}
+      }
+    }
+  }
+}
+```
+
+## 4. LangChain Integration
+**File:** `examples/workflows/langchain_integration/main.py`
+
+LLM Expect works perfectly with LangChain (LCEL). You simply wrap the `chain.invoke()` call in your decorated function.
+
+```python
+# Define your chain
+chain = prompt | model | output_parser
+
+@llm_expect(dataset="4_langchain_tests.jsonl")
+def run_chain(topic: str) -> str:
+    # Adapt the input string to the dictionary expected by the chain
+    return chain.invoke({"topic": topic})
+```
+
+**Key Dataset Pattern:**
+```json
+{
+  "input": "chicken",
+  "expected": {
+    "contains": ["cross the road"],
+    "judge": {"prompt": "Is this a funny joke?"}
+  }
+}
 ```

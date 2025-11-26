@@ -1,0 +1,2 @@
+{"id": "stock_apple", "input": "What is the price of Apple stock?", "expected": {"reference": {"name": "get_stock_price", "arguments": {"symbol": "AAPL", "currency": "USD"}}}}
+{"id": "stock_google", "input": "Check GOOGL price", "expected": {"schema": {"properties": {"name": {"const": "get_stock_price"}, "arguments": {"required": ["symbol"]}}}}}

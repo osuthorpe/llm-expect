@@ -1,0 +1,2 @@
+{"id": "joke_chicken", "input": "chicken", "expected": {"contains": ["cross the road", "other side"], "judge": {"prompt": "Is this a joke about a chicken?"}}}
+{"id": "joke_python", "input": "Python programming", "expected": {"contains": ["Python"], "judge": {"prompt": "Is this a joke about programming?"}}}

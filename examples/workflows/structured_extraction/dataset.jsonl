@@ -1,0 +1,2 @@
+{"id": "alice_extract", "input": "My name is Alice, I am 30 years old and live in New York.", "expected": {"schema": {"type": "object", "properties": {"name": {"type": "string"}, "age": {"type": "integer"}, "city": {"type": "string"}}, "required": ["name", "age", "city"]}, "contains": ["Alice", "New York"]}}
+{"id": "bob_extract", "input": "User Bob (25) from London.", "expected": {"schema": {"required": ["name", "city"]}, "reference": {"name": "Bob", "age": 25, "city": "London"}}}
