@@ -2,7 +2,7 @@
 
 LLM Expect is a minimalist, developer-first SDK for testing LLM-powered Python functions using structured JSONL datasets.
 
-> 🤖 **For AI Assistants:** Read [`llm.txt`](llm.txt) for implementation patterns.
+> 🤖 **For AI Assistants:** Read [`llm.txt`](https://raw.githubusercontent.com/osuthorpe/llm-expect/refs/heads/main/llm.txt) for implementation patterns.
 
 It provides a simple way to validate:
 
