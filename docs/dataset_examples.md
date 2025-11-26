@@ -94,3 +94,34 @@ Best for sentiment analysis or categorization.
 {"id": "class_pos", "input": "I love this product!", "expected": {"reference": "POSITIVE"}}
 {"id": "class_neg", "input": "This is terrible.", "expected": {"reference": "NEGATIVE"}}
 ```
+## 9. Multi-Expect (Combining Metrics)
+You can enforce multiple constraints on a single test case.
+
+```json
+{
+  "id": "complex_check",
+  "input": "Write a short JSON bio for Alice",
+  "expected": {
+    "contains": ["Alice"],
+    "schema": {"required": ["name", "bio"]},
+    "judge": {"prompt": "Is the bio positive?"}
+  }
+}
+```
+
+## 10. Conversation / Chat History
+Pass a list of messages as the input (if your function handles it).
+
+```json
+{
+  "id": "chat_01",
+  "input": [
+    {"role": "user", "content": "Hi, I'm Bob."},
+    {"role": "assistant", "content": "Hello Bob!"},
+    {"role": "user", "content": "What is my name?"}
+  ],
+  "expected": {
+    "reference": "Bob"
+  }
+}
+```

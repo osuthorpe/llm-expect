@@ -45,6 +45,11 @@ nav:
       - Expectations: expectations.md
       - Metrics: metrics.md
       - Judge Providers: judges.md
+  - Design Philosophy: philosophy.md
+  - Comparisons: comparisons.md
+  - Why JSONL?: why_jsonl.md
+  - Roadmap: roadmap.md
+  - How to Extend: extending.md
   - API Reference: api.md
   - Contributing: contributing.md
 
